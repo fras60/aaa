@@ -25,11 +25,11 @@ DOWN_METHOD="veth"  # Write: "veth" | "normal"
 
 ### CAKE settings ###
 
-BANDWIDTH_DOWN="39"  # Change this to about 80-95% of your download speed (in megabits).
-BANDWIDTH_UP="19"     # Change this to about 80-95% of your upload speed (in megabits).
-                      # Do a Speed Test: https://www.speedtest.net/
-                      # Not recommendable: Write "0" in "BANDWIDTH_DOWN" or "BANDWIDTH_UP" to use 'CAKE' with no limit on the bandwidth ('unlimited' parameter).
-                      # Not recommendable: Don't write anything in "BANDWIDTH_DOWN" or "BANDWIDTH_UP" to disable 'shaping' on ingress or egress.
+DOWNRATE="33000"  # Change this to about 80-95% of your download speed (in kbit).
+UPRATE="19000"     # Change this to about 80-95% of your upload speed (in kbit).
+                   # Do a Speed Test: https://www.speedtest.net/
+                   # Not recommendable: Don't write anything in "DOWNRATE" or "UPRATE" to use 'qdisc shaper' with no limit on the bandwidth ('unlimited' parameter).
+                   # Not recommendable: Write "0" in "DOWNRATE" or "UPRATE" to disable 'qdisc shaper' on download or upload.
 
 AUTORATE_INGRESS="no"  # Write: "yes" | "no"
                        # Enable CAKE automatic rate estimation for ingress.
