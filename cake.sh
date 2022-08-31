@@ -4,14 +4,9 @@
 
 ### Interfaces ###
 
-## Go to: "Network -> Interfaces" and write the name of those interfaces here.
-
-## Change this to the name of your "LAN interface", if you have altered it from the OpenWrt default.
-LAN="br-lan"
-
-
-## Change this to the name of your "WAN interface".
+## Go to "Network -> Interfaces" and write the name of your "WAN" interface.
 WAN="wan"
+
 ######################################################################################################################
 
 
@@ -38,7 +33,7 @@ LINK_COMPENSATION="atm"  # Write: "atm" | "ptm" | "noatm"
                       # Read: https://openwrt.org/docs/guide-user/network/traffic-shaping/sqm-details#sqmlink_layer_adaptation_tab
 
 ## Only use these presets or keywords if you don't write a value above in "OVERHEAD", "MPU" and "LINK_COMPENSATION".
-COMMON_LINK_PRESETS="pppoe-vcmux"  # Write the keyword below:
+COMMON_LINK_PRESETS="conservative"  # Write the keyword below:
                                     # "raw"              Failsafe     (Turns off all overhead compensation)
                                     # "conservative"     Failsafe     (overhead 48 - atm)
                                     # "ethernet"         Ethernet     (overhead 38 - mpu 84 - noatm)
