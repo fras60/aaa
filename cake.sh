@@ -5,7 +5,7 @@
 ### Interfaces ###
 
 ## Go to "Network -> Interfaces" and write the name of your "WAN" interface.
-WAN="wan"
+WAN="eth1"
 
 
 ######################################################################################################################
@@ -13,8 +13,8 @@ WAN="wan"
 
 ### CAKE settings ###
 
-BANDWIDTH_DOWN="340"  # Change this to about 80-95% of your download speed (in megabits).
-BANDWIDTH_UP="50"     # Change this to about 80-95% of your upload speed (in megabits).
+BANDWIDTH_DOWN="42"  # Change this to about 80-95% of your download speed (in megabits).
+BANDWIDTH_UP="22"     # Change this to about 80-95% of your upload speed (in megabits).
                       # Do a Speed Test: https://www.speedtest.net/
                       # Not recommendable: Write "0" in "BANDWIDTH_DOWN" or "BANDWIDTH_UP" to use 'CAKE' with no limit on the bandwidth ('unlimited' parameter).
                       # Not recommendable: Don't write anything in "BANDWIDTH_DOWN" or "BANDWIDTH_UP" to disable 'shaping' on ingress or egress.
