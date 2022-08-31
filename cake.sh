@@ -13,8 +13,8 @@ WAN="eth1"
 
 ### CAKE settings ###
 
-BANDWIDTH_DOWN="340"  # Change this to about 80-95% of your download speed (in megabits).
-BANDWIDTH_UP="50"     # Change this to about 80-95% of your upload speed (in megabits).
+BANDWIDTH_DOWN="42"  # Change this to about 80-95% of your download speed (in megabits).
+BANDWIDTH_UP="21"     # Change this to about 80-95% of your upload speed (in megabits).
                       # Do a Speed Test: https://www.speedtest.net/
                       # Not recommendable: Write "0" in "BANDWIDTH_DOWN" or "BANDWIDTH_UP" to use 'CAKE' with no limit on the bandwidth ('unlimited' parameter).
                       # Not recommendable: Don't write anything in "BANDWIDTH_DOWN" or "BANDWIDTH_UP" to disable 'shaping' on ingress or egress.
@@ -26,9 +26,9 @@ AUTORATE_INGRESS="no"  # Write: "yes" | "no"
                        # If you don't have "cellular link", you should never use this option.
 
 ## Make sure you set these parameters correctly for your connection type or don't write any value and use a presets or keywords below.
-OVERHEAD=""           # Write values between "-64" and "256"
-MPU=""                # Write values between "0" and "256"
-LINK_COMPENSATION=""  # Write: "atm" | "ptm" | "noatm"
+OVERHEAD="34"           # Write values between "-64" and "256"
+MPU="96"                # Write values between "0" and "256"
+LINK_COMPENSATION="atm"  # Write: "atm" | "ptm" | "noatm"
                       # These values overwrite the presets or keyboards below.
                       # Read: https://openwrt.org/docs/guide-user/network/traffic-shaping/sqm#configuring_the_sqm_bufferbloat_packages
                       # Read: https://openwrt.org/docs/guide-user/network/traffic-shaping/sqm-details#sqmlink_layer_adaptation_tab
@@ -136,7 +136,7 @@ CHAIN="FORWARD"  # Write: "FORWARD" | "POSTROUTING"
 
 
 ## DSCP values for the rules
-DSCP_ICMP="CS0"    # Change the DSCP value for ICMP (aka ping) to whatever you want.
+DSCP_ICMP="AF32"    # Change the DSCP value for ICMP (aka ping) to whatever you want.
 DSCP_GAMING="CS4"  # You can test changing the DSCP value for games from "CS4" to "EF" or whatever you want.
 
 
@@ -184,7 +184,7 @@ UDP_DST_BULK_PORTS="6881-6887, 51413"
 
 
 ## Other ports [OPTIONAL]
-DSCP_OTHER_PORTS="CS0"  # Change this DSCP value to whatever you want.
+DSCP_OTHER_PORTS="AF22"  # Change this DSCP value to whatever you want.
 
 TCP_SRC_OTHER_PORTS=""
 TCP_DST_OTHER_PORTS=""
@@ -206,7 +206,7 @@ UDP_DST_OTHER_PORTS=""
 
 
 ## Game consoles (Static IP)
-IPV4_GAME_CONSOLES_STATIC_IP="192.168.1.15, 192.168.1.20-192.168.1.25"
+IPV4_GAME_CONSOLES_STATIC_IP="192.168.1.15, 192.168.1.100-192.168.1.110, 192.168.5.1"
                               # Define a list of IPv4 addresses that will cover all ports (except ports 80, 443, 8080, Live Streaming and BitTorrent).
                               # Write a single IPv4 address or ranges of IPv4 addresses A-B and use a comma to separate them as shown.
                               # The IPv4 address ranges "192.168.1.20-192.168.1.25" will cover IPv4 addresses from '192.168.1.20' to '192.168.1.25'
@@ -232,10 +232,10 @@ IPV6_TORRENTBOX_STATIC_IP="IPv6::10"
 
 
 ## Other static IP addresses [OPTIONAL]
-DSCP_OTHER_STATIC_IP="CS0"  # Change this DSCP value to whatever you want.
+DSCP_OTHER_STATIC_IP="AF33"  # Change this DSCP value to whatever you want.
 
-IPV4_OTHER_STATIC_IP=""
-IPV6_OTHER_STATIC_IP=""
+IPV4_OTHER_STATIC_IP="EF"
+IPV6_OTHER_STATIC_IP="EF"
                       # Define a list of IP addresses to mark 'all traffic' wherever you want.
                       # Write a single IPv4 and IPv6 address or ranges of IP addresses A-B and use a comma to separate them as shown.
 
