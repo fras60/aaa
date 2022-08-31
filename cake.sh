@@ -11,7 +11,7 @@ LAN="br-lan"
 
 
 ## Change this to the name of your "WAN interface".
-WAN="wan"
+WAN="pppoe-wan"
 
 
 ############################################################
@@ -41,8 +41,8 @@ AUTORATE_INGRESS="no"  # Write: "yes" | "no"
                        # This is most likely to be useful with cellular links, which tend to change quality randomly.
 
 ## Make sure you set these parameters correctly for your connection type or don't write any value and use a presets or keywords below.
-OVERHEAD="22"  # Write values between "-64" and "256"
-MPU=""       # Write values between "0" and "256"
+OVERHEAD="34"  # Write values between "-64" and "256"
+MPU="96"       # Write values between "0" and "256"
 FRAMING="ptm"   # Write: "ptm" | "atm" | "noatm"
              # These values overwrite the presets or keyboards below.
              # Read: https://openwrt.org/docs/guide-user/network/traffic-shaping/sqm#configuring_the_sqm_bufferbloat_packages
@@ -70,7 +70,7 @@ COMMON_LINK_PRESETS="conservative"  # Write the keyword below:
                                     # see: https://github.com/moeller0/ATM_overhead_detector for further information how to do that.
 
 ## This keyword is not for standalone use, but act as a modifier to some previous presets or keywords.
-ETHER_VLAN_KEYWORD=""  # Write values between "1" and "3" or don't write any value.
+ETHER_VLAN_KEYWORD="2"  # Write values between "1" and "3" or don't write any value.
                        # In addition to those previous presets or keywords it is common to have VLAN tags (4 extra bytes) or PPPoE encapsulation (8 extra bytes).
                        # "1" Adds '4 bytes' to the overhead  (ether-vlan)
                        # "2" Adds '8 bytes' to the overhead  (ether-vlan ether-vlan)
