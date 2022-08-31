@@ -55,7 +55,7 @@ COMMON_LINK_PRESETS="conservative"  # Write the keyword below:
                                     # see: https://github.com/moeller0/ATM_overhead_detector for further information how to do that.
 
 ## This keyword is not for standalone use, but act as a modifier to some previous presets or keywords.
-ETHER_VLAN_KEYWORD="2"  # Write values between "1" and "3" or don't write any value.
+ETHER_VLAN_KEYWORD=""  # Write values between "1" and "3" or don't write any value.
                        # In addition to those previous presets or keywords it is common to have VLAN tags (4 extra bytes) or PPPoE encapsulation (8 extra bytes).
                        # "1" Adds '4 bytes' to the overhead  (ether-vlan)
                        # "2" Adds '8 bytes' to the overhead  (ether-vlan ether-vlan)
