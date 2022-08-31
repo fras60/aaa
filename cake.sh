@@ -5,7 +5,7 @@
 ### Interfaces ###
 
 ## Go to "Network -> Interfaces" and write the name of your "WAN" interface.
-WAN="wan"
+WAN="eth1"
 
 ######################################################################################################################
 
