@@ -3,9 +3,21 @@
 
 
 ### Interfaces ###
+## Go to: "Network -> Interfaces" and write the name of those interfaces here.
+
+## Change this to the name of your "LAN interface", if you have altered it from the OpenWrt default.
+LAN="br-lan"
 
 ## Go to "Network -> Interfaces" and write the name of your "WAN" interface.
 WAN="eth1"
+
+
+######################################################################################################################
+### Download methods ###
+
+DOWN_METHOD="veth"  # Write: "veth" | "normal"
+                    # "veth"   The 'DSCP marks' work on download and upload in "Cake".
+                    # "normal" The 'DSCP marks' only work on upload in "Cake".
 
 
 ######################################################################################################################
@@ -13,8 +25,8 @@ WAN="eth1"
 
 ### CAKE settings ###
 
-BANDWIDTH_DOWN="42"  # Change this to about 80-95% of your download speed (in megabits).
-BANDWIDTH_UP="21"     # Change this to about 80-95% of your upload speed (in megabits).
+BANDWIDTH_DOWN="39"  # Change this to about 80-95% of your download speed (in megabits).
+BANDWIDTH_UP="19"     # Change this to about 80-95% of your upload speed (in megabits).
                       # Do a Speed Test: https://www.speedtest.net/
                       # Not recommendable: Write "0" in "BANDWIDTH_DOWN" or "BANDWIDTH_UP" to use 'CAKE' with no limit on the bandwidth ('unlimited' parameter).
                       # Not recommendable: Don't write anything in "BANDWIDTH_DOWN" or "BANDWIDTH_UP" to disable 'shaping' on ingress or egress.
@@ -26,15 +38,15 @@ AUTORATE_INGRESS="no"  # Write: "yes" | "no"
                        # If you don't have "cellular link", you should never use this option.
 
 ## Make sure you set these parameters correctly for your connection type or don't write any value and use a presets or keywords below.
-OVERHEAD="34"           # Write values between "-64" and "256"
-MPU="96"                # Write values between "0" and "256"
-LINK_COMPENSATION="atm"  # Write: "atm" | "ptm" | "noatm"
+OVERHEAD="48"           # Write values between "-64" and "256"
+MPU="128"                # Write values between "0" and "256"
+LINK_COMPENSATION="noatm"  # Write: "atm" | "ptm" | "noatm"
                       # These values overwrite the presets or keyboards below.
                       # Read: https://openwrt.org/docs/guide-user/network/traffic-shaping/sqm#configuring_the_sqm_bufferbloat_packages
                       # Read: https://openwrt.org/docs/guide-user/network/traffic-shaping/sqm-details#sqmlink_layer_adaptation_tab
 
 ## Only use these presets or keywords if you don't write a value above in "OVERHEAD", "MPU" and "LINK_COMPENSATION".
-COMMON_LINK_PRESETS="pppoe-vcmux"  # Write the keyword below:
+COMMON_LINK_PRESETS="conservative"  # Write the keyword below:
                                     # "raw"              Failsafe     (Turns off all overhead compensation)
                                     # "conservative"     Failsafe     (overhead 48 - atm)
                                     # "ethernet"         Ethernet     (overhead 38 - mpu 84 - noatm)
@@ -64,7 +76,7 @@ ETHER_VLAN_KEYWORD="2"  # Write values between "1" and "3" or don't write any va
                        # This keyword "ether-vlan" may be repeated as necessary in 'EXTRA PARAMETERS'.
                        # Read: https://man7.org/linux/man-pages/man8/tc-cake.8.html#OVERHEAD_COMPENSATION_PARAMETERS
 
-PRIORITY_QUEUE_INGRESS="diffserv8"  # Write: "besteffort" | "diffserv3" | "diffserv4" | "diffserv8"
+PRIORITY_QUEUE_INGRESS="diffserv4"  # Write: "besteffort" | "diffserv3" | "diffserv4" | "diffserv8"
 PRIORITY_QUEUE_EGRESS="diffserv4"   # Write: "besteffort" | "diffserv3" | "diffserv4" | "diffserv8"
                                     # CAKE can divide traffic into tins based on the Diffserv field.
                                     # "besteffort" only has 'one tin' or priority tier.
@@ -98,7 +110,7 @@ INGRESS_MODE="yes"  # Write: "yes" | "no"
                     # Thus, being more lenient and keeping a minimum number of packets queued will improve throughput in cases
                     # where the number of active flows are so large that they saturate the bottleneck even at their minimum window size.
 
-ACK_FILTER_EGRESS="auto"  # Write: "yes" | "no" | "auto"
+ACK_FILTER_EGRESS="yes"  # Write: "yes" | "no" | "auto"
                           # Write "auto" or don't write anything, so that the script decide to use this parameter, depending on the bandwidth you wrote in "BANDWIDTH_DOWN" and "BANDWIDTH_UP".
                           # If your up/down bandwidth is at least 1x15 asymmetric, you can try the 'ack-filter' option.
                           # It doesn't help on your downlink, nor on symmetric links.
@@ -118,8 +130,8 @@ RTT="200"  # Write values between "1" and "1000" or don't write any value to use
         # Example: ping -c 20 openwrt.org (Linux)
         # Example: ping -n 20 openwrt.org (Windows)
 
-EXTRA_PARAMETERS_INGRESS=""  # Add any custom parameters separated by spaces.
-EXTRA_PARAMETERS_EGRESS=""   # Add any custom parameters separated by spaces.
+EXTRA_PARAMETERS_INGRESS="ether-vlan ether-vlan"  # Add any custom parameters separated by spaces.
+EXTRA_PARAMETERS_EGRESS="ether-vlan ether-vlan"   # Add any custom parameters separated by spaces.
                              # These will be appended to the end of the CAKE options and take priority over the options above.
                              # There is no validation done on these options. Use carefully!
                              # Look: https://man7.org/linux/man-pages/man8/tc-cake.8.html
@@ -232,10 +244,10 @@ IPV6_TORRENTBOX_STATIC_IP="IPv6::10"
 
 
 ## Other static IP addresses [OPTIONAL]
-DSCP_OTHER_STATIC_IP="AF33"  # Change this DSCP value to whatever you want.
+DSCP_OTHER_STATIC_IP="AF21"  # Change this DSCP value to whatever you want.
 
-IPV4_OTHER_STATIC_IP="EF"
-IPV6_OTHER_STATIC_IP="EF"
+IPV4_OTHER_STATIC_IP="CS2"
+IPV6_OTHER_STATIC_IP="CS2"
                       # Define a list of IP addresses to mark 'all traffic' wherever you want.
                       # Write a single IPv4 and IPv6 address or ranges of IP addresses A-B and use a comma to separate them as shown.
 
