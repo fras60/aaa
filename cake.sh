@@ -4,10 +4,14 @@
 
 ### Interfaces ###
 
-## Go to "Network -> Interfaces" and write the name of your "WAN" interface.
-WAN="pppoe-wan"
+## Go to: "Network -> Interfaces" and write the name of those interfaces here.
+
+## Change this to the name of your "LAN interface", if you have altered it from the OpenWrt default.
+LAN="br-lan"
 
 
+## Change this to the name of your "WAN interface".
+WAN="wan"
 ######################################################################################################################
 
 
