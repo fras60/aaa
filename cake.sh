@@ -34,7 +34,7 @@ AUTORATE_INGRESS="no"  # Write: "yes" | "no"
                        # If you don't have "cellular link", you should never use this option.
 
 ## Make sure you set these parameters correctly for your connection type or don't write any value and use a presets or keywords below.
-OVERHEAD="-20"           # Write values between "-64" and "256"
+OVERHEAD="48"           # Write values between "-64" and "256"
 MPU="128"                # Write values between "0" and "256"
 LINK_COMPENSATION="noatm"  # Write: "atm" | "ptm" | "noatm"
                       # These values overwrite the presets or keyboards below.
