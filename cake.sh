@@ -85,7 +85,7 @@ HOST_ISOLATION="yes"  # Write: "yes" | "no"
                       # that has multiple connections (like when torrenting) from hogging all the bandwidth
                       # and provides better traffic management when multiple hosts/clients are using the internet at the same time.
 
-NAT_INGRESS="no"  # Write: "yes" | "no"
+NAT_INGRESS="yes"  # Write: "yes" | "no"
 NAT_EGRESS="yes"  # Write: "yes" | "no"
                   # Perform a NAT lookup before applying 'host isolation' rules to improve fairness between hosts "inside" the NAT.
                   # Don't use "nat" parameter on 'ingress' when use "veth method" or 'host isolation' stops working.
@@ -144,7 +144,7 @@ CHAIN="FORWARD"  # Write: "FORWARD" | "POSTROUTING"
 
 
 ## DSCP values for the rules
-DSCP_ICMP="AF32"    # Change the DSCP value for ICMP (aka ping) to whatever you want.
+DSCP_ICMP="AF33"    # Change the DSCP value for ICMP (aka ping) to whatever you want.
 DSCP_GAMING="CS4"  # You can test changing the DSCP value for games from "CS4" to "EF" or whatever you want.
 
 
@@ -240,7 +240,7 @@ IPV6_TORRENTBOX_STATIC_IP="IPv6::10"
 
 
 ## Other static IP addresses [OPTIONAL]
-DSCP_OTHER_STATIC_IP="AF21"  # Change this DSCP value to whatever you want.
+DSCP_OTHER_STATIC_IP="TOS4"  # Change this DSCP value to whatever you want.
 
 IPV4_OTHER_STATIC_IP="CS2"
 IPV6_OTHER_STATIC_IP="CS2"
