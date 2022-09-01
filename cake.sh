@@ -21,7 +21,7 @@ DOWN_METHOD="veth"  # Write: "veth" | "normal"
 
 ### CAKE settings ###
 
-BANDWIDTH_DOWN="30"  # Change this to about 80-95% of your download speed (in megabits).
+BANDWIDTH_DOWN="42"  # Change this to about 80-95% of your download speed (in megabits).
 BANDWIDTH_UP="20"     # Change this to about 80-95% of your upload speed (in megabits).
                       # Do a Speed Test: https://www.speedtest.net/
                       # Not recommendable: Write "0" in "BANDWIDTH_DOWN" or "BANDWIDTH_UP" to use 'CAKE' with no limit on the bandwidth ('unlimited' parameter).
