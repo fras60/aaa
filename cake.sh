@@ -29,7 +29,7 @@ DOWN_METHOD="veth"  # Write: "veth" | "normal"
 
 ### CAKE settings ###
 
-DOWNRATE="56000"  # Change this to about 80-95% of your download speed (in kbit).
+DOWNRATE="35000"  # Change this to about 80-95% of your download speed (in kbit).
 UPRATE="16000"     # Change this to about 80-95% of your upload speed (in kbit).
                    # Do a Speed Test: https://www.speedtest.net/
                    # Not recommendable: Don't write anything in "DOWNRATE" or "UPRATE" to use 'qdisc shaper' with no limit on the bandwidth ('unlimited' parameter).
