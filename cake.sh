@@ -10,13 +10,6 @@ LAN_VPN="br-LAN_VPN"
 WAN="eth1"
 DMZ="eth0.10"
 
-######################################################################################################################
-### Download methods ###
-
-DOWN_METHOD="veth"  # Write: "veth" | "normal"
-                    # "veth"   The 'DSCP marks' work on download and upload in "Cake".
-                    # "normal" The 'DSCP marks' only work on upload in "Cake".
-
 
 ######################################################################################################################
 
