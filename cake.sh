@@ -6,6 +6,7 @@
 
 ## Go to "Network -> Interfaces" and write the name of your "WAN" interface.
 WAN="breth1"
+UN="pppoe-wan"
 
 
 ######################################################################################################################
