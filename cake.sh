@@ -5,7 +5,7 @@
 ### Interfaces ###
 
 ## Go to "Network -> Interfaces" and write the name of your "WAN" interface.
-WAN="eth1"
+WAN="breth1"
 
 
 ######################################################################################################################
@@ -21,28 +21,28 @@ DOWN_METHOD="veth"  # Write: "veth" | "normal"
 
 ### CAKE settings ###
 
-BANDWIDTH_DOWN="20"  # Change this to about 80-95% of your download speed (in megabits).
+BANDWIDTH_DOWN="38"  # Change this to about 80-95% of your download speed (in megabits).
 BANDWIDTH_UP="21"     # Change this to about 80-95% of your upload speed (in megabits).
                       # Do a Speed Test: https://www.speedtest.net/
                       # Not recommendable: Write "0" in "BANDWIDTH_DOWN" or "BANDWIDTH_UP" to use 'CAKE' with no limit on the bandwidth ('unlimited' parameter).
                       # Not recommendable: Don't write anything in "BANDWIDTH_DOWN" or "BANDWIDTH_UP" to disable 'shaping' on ingress or egress.
 
-AUTORATE_INGRESS="no"  # Write: "yes" | "no"
+AUTORATE_INGRESS="yes"  # Write: "yes" | "no"
                        # Enable CAKE automatic rate estimation for ingress.
                        # For it to work you need to write your bandwidth in "BANDWIDTH_DOWN" to specify an initial estimate.
                        # This is most likely to be useful with "cellular links", which tend to change quality randomly.
                        # If you don't have "cellular link", you should never use this option.
 
 ## Make sure you set these parameters correctly for your connection type or don't write any value and use a presets or keywords below.
-OVERHEAD="48"           # Write values between "-64" and "256"
-MPU="96"                # Write values between "0" and "256"
-LINK_COMPENSATION="atm"  # Write: "atm" | "ptm" | "noatm"
+OVERHEAD="64"           # Write values between "-64" and "256"
+MPU="124"                # Write values between "0" and "256"
+LINK_COMPENSATION="ptm"  # Write: "atm" | "ptm" | "noatm"
                       # These values overwrite the presets or keyboards below.
                       # Read: https://openwrt.org/docs/guide-user/network/traffic-shaping/sqm#configuring_the_sqm_bufferbloat_packages
                       # Read: https://openwrt.org/docs/guide-user/network/traffic-shaping/sqm-details#sqmlink_layer_adaptation_tab
 
 ## Only use these presets or keywords if you don't write a value above in "OVERHEAD", "MPU" and "LINK_COMPENSATION".
-COMMON_LINK_PRESETS="conservative"  # Write the keyword below:
+COMMON_LINK_PRESETS="pppoe-ptm"  # Write the keyword below:
                                     # "raw"              Failsafe     (Turns off all overhead compensation)
                                     # "conservative"     Failsafe     (overhead 48 - atm)
                                     # "ethernet"         Ethernet     (overhead 38 - mpu 84 - noatm)
