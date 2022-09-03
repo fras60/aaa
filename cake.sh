@@ -21,7 +21,7 @@ DOWN_METHOD="veth"  # Write: "veth" | "normal"
 
 ### CAKE settings ###
 
-BANDWIDTH_DOWN="40"  # Change this to about 80-95% of your download speed (in megabits).
+BANDWIDTH_DOWN="20"  # Change this to about 80-95% of your download speed (in megabits).
 BANDWIDTH_UP="21"     # Change this to about 80-95% of your upload speed (in megabits).
                       # Do a Speed Test: https://www.speedtest.net/
                       # Not recommendable: Write "0" in "BANDWIDTH_DOWN" or "BANDWIDTH_UP" to use 'CAKE' with no limit on the bandwidth ('unlimited' parameter).
@@ -98,7 +98,7 @@ WASH_EGRESS="yes"  # Write: "yes" | "no"
                    # Wash outgoing (egress) DSCP marking to ISP, because may be mis-marked from ISP perspective.
                    ## Recommendation: Don't use "wash" on ingress so that the "Wi-Fi Multimedia (WMM) QoS" can make use of the custom DSCP marking and just use "wash" on egress.
 
-INGRESS_MODE="yes"  # Write: "yes" | "no"
+INGRESS_MODE="no"  # Write: "yes" | "no"
                     # Enabling "ingress mode" ('ingress' parameter) will tune the AQM to always keep at least two packets queued *for each flow*.
                     # Basically will drop and/or delay packets in a way that the rate of packets leaving the shaper is smaller or equal to the configured shaper-rate.
                     # This leads to slightly more aggressive dropping, but this also ameliorates one issue we have with post-bottleneck shaping,
@@ -263,7 +263,7 @@ TCP_CONGESTION_CONTROL="bbr"  # Write: "cubic" | "bbr"
                               # "bbr"   The algorithm that was developed by Google and is since used on YouTube, maybe this can improve network response.
 
 
-ECN="2"  # Write values between "0" and "2"
+ECN="1"  # Write values between "0" and "2"
          # "0" Disable ECN. Neither initiate nor accept ECN. (Default in OpenWrt)
          # "1" Enable ECN. When requested by incoming connections and also request ECN on outgoing connection attempts.
          # "2" Enable ECN. When requested by incoming connections, but do not request ECN on outgoing connections.
@@ -281,7 +281,7 @@ IRQBALANCE="yes"  # Write: "yes" | "no"
                  # The purpose of irqbalance is to distribute hardware interrupts across processors/cores on a multiprocessor/multicore system in order to increase performance.
 
 
-PACKET_STEERING="no"  # Write: "yes" | "no"
+PACKET_STEERING="yes"  # Write: "yes" | "no"
                       ## If you enable or disable it, you need to "reboot" the router for it to take effect.
                       # Enable packet steering across all CPUs. May help or hinder network speed.
                       # It's another (further) approach of trying to equally distribute the load of (network-) packet processing over all available cores.
