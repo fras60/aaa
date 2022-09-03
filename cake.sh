@@ -5,8 +5,7 @@
 ### Interfaces ###
 
 ## Go to "Network -> Interfaces" and write the name of your "WAN" interface.
-WAN="breth1"
-UN="pppoe-wan"
+WAN="eth1"
 
 
 ######################################################################################################################
@@ -22,7 +21,7 @@ DOWN_METHOD="veth"  # Write: "veth" | "normal"
 
 ### CAKE settings ###
 
-BANDWIDTH_DOWN="38"  # Change this to about 80-95% of your download speed (in megabits).
+BANDWIDTH_DOWN="42"  # Change this to about 80-95% of your download speed (in megabits).
 BANDWIDTH_UP="21"     # Change this to about 80-95% of your upload speed (in megabits).
                       # Do a Speed Test: https://www.speedtest.net/
                       # Not recommendable: Write "0" in "BANDWIDTH_DOWN" or "BANDWIDTH_UP" to use 'CAKE' with no limit on the bandwidth ('unlimited' parameter).
@@ -35,15 +34,15 @@ AUTORATE_INGRESS="yes"  # Write: "yes" | "no"
                        # If you don't have "cellular link", you should never use this option.
 
 ## Make sure you set these parameters correctly for your connection type or don't write any value and use a presets or keywords below.
-OVERHEAD="64"           # Write values between "-64" and "256"
-MPU="124"                # Write values between "0" and "256"
-LINK_COMPENSATION="ptm"  # Write: "atm" | "ptm" | "noatm"
+OVERHEAD="38"           # Write values between "-64" and "256"
+MPU="84"                # Write values between "0" and "256"
+LINK_COMPENSATION="noatm"  # Write: "atm" | "ptm" | "noatm"
                       # These values overwrite the presets or keyboards below.
                       # Read: https://openwrt.org/docs/guide-user/network/traffic-shaping/sqm#configuring_the_sqm_bufferbloat_packages
                       # Read: https://openwrt.org/docs/guide-user/network/traffic-shaping/sqm-details#sqmlink_layer_adaptation_tab
 
 ## Only use these presets or keywords if you don't write a value above in "OVERHEAD", "MPU" and "LINK_COMPENSATION".
-COMMON_LINK_PRESETS="pppoe-ptm"  # Write the keyword below:
+COMMON_LINK_PRESETS="ethernet"  # Write the keyword below:
                                     # "raw"              Failsafe     (Turns off all overhead compensation)
                                     # "conservative"     Failsafe     (overhead 48 - atm)
                                     # "ethernet"         Ethernet     (overhead 38 - mpu 84 - noatm)
@@ -86,7 +85,7 @@ HOST_ISOLATION="yes"  # Write: "yes" | "no"
                       # that has multiple connections (like when torrenting) from hogging all the bandwidth
                       # and provides better traffic management when multiple hosts/clients are using the internet at the same time.
 
-NAT_INGRESS="yes"  # Write: "yes" | "no"
+NAT_INGRESS="no"  # Write: "yes" | "no"
 NAT_EGRESS="yes"  # Write: "yes" | "no"
                   # Perform a NAT lookup before applying 'host isolation' rules to improve fairness between hosts "inside" the NAT.
                   # Don't use "nat" parameter on 'ingress' when use "veth method" or 'host isolation' stops working.
