@@ -20,13 +20,13 @@ DOWN_METHOD="veth"  # Write: "veth" | "normal"
 
 ### CAKE settings ###
 
-BANDWIDTH_DOWN="41"  # Change this to about 80-95% of your download speed (in megabits).
+BANDWIDTH_DOWN="50"  # Change this to about 80-95% of your download speed (in megabits).
 BANDWIDTH_UP="21"     # Change this to about 80-95% of your upload speed (in megabits).
                       # Do a Speed Test: https://www.speedtest.net/
                       # Not recommendable: Write "0" in "BANDWIDTH_DOWN" or "BANDWIDTH_UP" to use 'CAKE' with no limit on the bandwidth ('unlimited' parameter).
                       # Not recommendable: Don't write anything in "BANDWIDTH_DOWN" or "BANDWIDTH_UP" to disable 'shaping' on ingress or egress.
 
-AUTORATE_INGRESS="no"  # Write: "yes" | "no"
+AUTORATE_INGRESS="yes"  # Write: "yes" | "no"
                        # Enable CAKE automatic rate estimation for ingress.
                        # For it to work you need to write your bandwidth in "BANDWIDTH_DOWN" to specify an initial estimate.
                        # This is most likely to be useful with "cellular links", which tend to change quality randomly.
@@ -34,8 +34,8 @@ AUTORATE_INGRESS="no"  # Write: "yes" | "no"
 
 ## Make sure you set these parameters correctly for your connection type or don't write any value and use a presets or keywords below.
 OVERHEAD="48"           # Write values between "-64" and "256"
-MPU="84"                # Write values between "0" and "256"
-LINK_COMPENSATION="atm"  # Write: "atm" | "ptm" | "noatm"
+MPU="124"                # Write values between "0" and "256"
+LINK_COMPENSATION="noatm"  # Write: "atm" | "ptm" | "noatm"
                       # These values overwrite the presets or keyboards below.
                       # Read: https://openwrt.org/docs/guide-user/network/traffic-shaping/sqm#configuring_the_sqm_bufferbloat_packages
                       # Read: https://openwrt.org/docs/guide-user/network/traffic-shaping/sqm-details#sqmlink_layer_adaptation_tab
@@ -84,7 +84,7 @@ HOST_ISOLATION="yes"  # Write: "yes" | "no"
                       # that has multiple connections (like when torrenting) from hogging all the bandwidth
                       # and provides better traffic management when multiple hosts/clients are using the internet at the same time.
 
-NAT_INGRESS="no"  # Write: "yes" | "no"
+NAT_INGRESS="yes"  # Write: "yes" | "no"
 NAT_EGRESS="yes"  # Write: "yes" | "no"
                   # Perform a NAT lookup before applying 'host isolation' rules to improve fairness between hosts "inside" the NAT.
                   # Don't use "nat" parameter on 'ingress' when use "veth method" or 'host isolation' stops working.
@@ -97,7 +97,7 @@ WASH_EGRESS="yes"  # Write: "yes" | "no"
                    # Wash outgoing (egress) DSCP marking to ISP, because may be mis-marked from ISP perspective.
                    ## Recommendation: Don't use "wash" on ingress so that the "Wi-Fi Multimedia (WMM) QoS" can make use of the custom DSCP marking and just use "wash" on egress.
 
-INGRESS_MODE="no"  # Write: "yes" | "no"
+INGRESS_MODE="yes"  # Write: "yes" | "no"
                     # Enabling "ingress mode" ('ingress' parameter) will tune the AQM to always keep at least two packets queued *for each flow*.
                     # Basically will drop and/or delay packets in a way that the rate of packets leaving the shaper is smaller or equal to the configured shaper-rate.
                     # This leads to slightly more aggressive dropping, but this also ameliorates one issue we have with post-bottleneck shaping,
@@ -113,7 +113,7 @@ ACK_FILTER_EGRESS="yes"  # Write: "yes" | "no" | "auto"
                           # Don't recommend turning it on more symmetrical link bandwidths the effect is negligible at best.
 
 ## Don't write 'ms', just write the number.
-RTT="85"  # Write values between "1" and "1000" or don't write any value to use the default value (100).
+RTT="40"  # Write values between "1" and "1000" or don't write any value to use the default value (100).
         # This parameter defines the time window that your shaper will give the endpoints to react to shaping signals (drops or ECN).
         # The default "100ms" is pretty decent that works for many people, assuming their packets don't always need to cross long distances.
         # If you are based in Europe and access data in California I would assume 200-300ms to be a better value.
