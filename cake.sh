@@ -214,7 +214,7 @@ UDP_DST_OTHER_PORTS=""
 
 
 ## Game consoles (Static IP)
-IPV4_GAME_CONSOLES_STATIC_IP="168.1.15, 192.168.1.100-192.168.1.110, 192.168.5.1-192.168.5.15"
+IPV4_GAME_CONSOLES_STATIC_IP="192.168.1.15, 192.168.1.100-192.168.1.110, 192.168.5.1-192.168.5.15"
                               # Define a list of IPv4 addresses that will cover all ports (except ports 80, 443, 8080, Live Streaming and BitTorrent).
                               # Write a single IPv4 address or ranges of IPv4 addresses A-B and use a comma to separate them as shown.
                               # The IPv4 address ranges "192.168.1.20-192.168.1.25" will cover IPv4 addresses from '192.168.1.20' to '192.168.1.25'
