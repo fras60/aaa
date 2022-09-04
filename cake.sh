@@ -7,7 +7,7 @@
 LAN_VPN="br-LAN_VPN"
 
 ## Go to "Network -> Interfaces" and write the name of your "WAN" interface.
-WAN="eth1"
+WAN="breth1"
 DMZ="eth0.10"
 
 ######################################################################################################################
