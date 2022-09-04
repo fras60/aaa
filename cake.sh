@@ -3,11 +3,9 @@
 
 
 ### Interfaces ###
-## Change this to the name of your "LAN interface", if you have altered it from the OpenWrt default.
-LAN_VPN="br-LAN_VPN"
 
 ## Go to "Network -> Interfaces" and write the name of your "WAN" interface.
-WAN="breth1"
+WAN="eth1"
 DMZ="eth0.10"
 
 ######################################################################################################################
