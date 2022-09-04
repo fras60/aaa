@@ -142,7 +142,7 @@ EXTRA_PARAMETERS_EGRESS="ether-vlan ether-vlan"   # Add any custom parameters se
 
 
 ## Default chain for the rules
-CHAIN="FORWARD"  # Write: "FORWARD" | "POSTROUTING"
+CHAIN="POSTROUTING"  # Write: "FORWARD" | "POSTROUTING"
 
 
 ## DSCP values for the rules
