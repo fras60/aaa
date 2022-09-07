@@ -33,15 +33,15 @@ AUTORATE_INGRESS="yes"  # Write: "yes" | "no"
                        # If you don't have "cellular link", you should never use this option.
 
 ## Make sure you set these parameters correctly for your connection type or don't write any value and use a presets or keywords below.
-OVERHEAD="48"           # Write values between "-64" and "256"
-MPU="124"                # Write values between "0" and "256"
+OVERHEAD="40"           # Write values between "-64" and "256"
+MPU="164"                # Write values between "0" and "256"
 LINK_COMPENSATION="noatm"  # Write: "atm" | "ptm" | "noatm"
                       # These values overwrite the presets or keyboards below.
                       # Read: https://openwrt.org/docs/guide-user/network/traffic-shaping/sqm#configuring_the_sqm_bufferbloat_packages
                       # Read: https://openwrt.org/docs/guide-user/network/traffic-shaping/sqm-details#sqmlink_layer_adaptation_tab
 
 ## Only use these presets or keywords if you don't write a value above in "OVERHEAD", "MPU" and "LINK_COMPENSATION".
-COMMON_LINK_PRESETS="conservative"  # Write the keyword below:
+COMMON_LINK_PRESETS="Ethernet"  # Write the keyword below:
                                     # "raw"              Failsafe     (Turns off all overhead compensation)
                                     # "conservative"     Failsafe     (overhead 48 - atm)
                                     # "ethernet"         Ethernet     (overhead 38 - mpu 84 - noatm)
@@ -63,7 +63,7 @@ COMMON_LINK_PRESETS="conservative"  # Write the keyword below:
                                     # see: https://github.com/moeller0/ATM_overhead_detector for further information how to do that.
 
 ## This keyword is not for standalone use, but act as a modifier to some previous presets or keywords.
-ETHER_VLAN_KEYWORD="2"  # Write values between "1" and "3" or don't write any value.
+ETHER_VLAN_KEYWORD="3"  # Write values between "1" and "3" or don't write any value.
                        # In addition to those previous presets or keywords it is common to have VLAN tags (4 extra bytes) or PPPoE encapsulation (8 extra bytes).
                        # "1" Adds '4 bytes' to the overhead  (ether-vlan)
                        # "2" Adds '8 bytes' to the overhead  (ether-vlan ether-vlan)
@@ -84,7 +84,7 @@ HOST_ISOLATION="yes"  # Write: "yes" | "no"
                       # that has multiple connections (like when torrenting) from hogging all the bandwidth
                       # and provides better traffic management when multiple hosts/clients are using the internet at the same time.
 
-NAT_INGRESS="no"  # Write: "yes" | "no"
+NAT_INGRESS="yes"  # Write: "yes" | "no"
 NAT_EGRESS="yes"  # Write: "yes" | "no"
                   # Perform a NAT lookup before applying 'host isolation' rules to improve fairness between hosts "inside" the NAT.
                   # Don't use "nat" parameter on 'ingress' when use "veth method" or 'host isolation' stops working.
@@ -113,7 +113,7 @@ ACK_FILTER_EGRESS="yes"  # Write: "yes" | "no" | "auto"
                           # Don't recommend turning it on more symmetrical link bandwidths the effect is negligible at best.
 
 ## Don't write 'ms', just write the number.
-RTT="45"  # Write values between "1" and "1000" or don't write any value to use the default value (100).
+RTT="85"  # Write values between "1" and "1000" or don't write any value to use the default value (100).
         # This parameter defines the time window that your shaper will give the endpoints to react to shaping signals (drops or ECN).
         # The default "100ms" is pretty decent that works for many people, assuming their packets don't always need to cross long distances.
         # If you are based in Europe and access data in California I would assume 200-300ms to be a better value.
@@ -125,8 +125,8 @@ RTT="45"  # Write values between "1" and "1000" or don't write any value to use 
         # Example: ping -c 20 openwrt.org (Linux)
         # Example: ping -n 20 openwrt.org (Windows)
 
-EXTRA_PARAMETERS_INGRESS="ether-vlan ether-vlan"  # Add any custom parameters separated by spaces.
-EXTRA_PARAMETERS_EGRESS="ether-vlan ether-vlan"   # Add any custom parameters separated by spaces.
+EXTRA_PARAMETERS_INGRESS="ether-vlan ether-vlan ether-vlan"  # Add any custom parameters separated by spaces.
+EXTRA_PARAMETERS_EGRESS="ether-vlan ether-vlan ether-vlan"   # Add any custom parameters separated by spaces.
                              # These will be appended to the end of the CAKE options and take priority over the options above.
                              # There is no validation done on these options. Use carefully!
                              # Look: https://man7.org/linux/man-pages/man8/tc-cake.8.html
@@ -262,7 +262,7 @@ TCP_CONGESTION_CONTROL="bbr"  # Write: "cubic" | "bbr"
                               # "bbr"   The algorithm that was developed by Google and is since used on YouTube, maybe this can improve network response.
 
 
-ECN="1"  # Write values between "0" and "2"
+ECN="2"  # Write values between "0" and "2"
          # "0" Disable ECN. Neither initiate nor accept ECN. (Default in OpenWrt)
          # "1" Enable ECN. When requested by incoming connections and also request ECN on outgoing connection attempts.
          # "2" Enable ECN. When requested by incoming connections, but do not request ECN on outgoing connections.
