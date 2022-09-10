@@ -33,15 +33,15 @@ AUTORATE_INGRESS="yes"  # Write: "yes" | "no"
                        # If you don't have "cellular link", you should never use this option.
 
 ## Make sure you set these parameters correctly for your connection type or don't write any value and use a presets or keywords below.
-OVERHEAD="40"           # Write values between "-64" and "256"
-MPU="164"                # Write values between "0" and "256"
-LINK_COMPENSATION="noatm"  # Write: "atm" | "ptm" | "noatm"
+OVERHEAD="48"           # Write values between "-64" and "256"
+MPU="124"                # Write values between "0" and "256"
+LINK_COMPENSATION="atm"  # Write: "atm" | "ptm" | "noatm"
                       # These values overwrite the presets or keyboards below.
                       # Read: https://openwrt.org/docs/guide-user/network/traffic-shaping/sqm#configuring_the_sqm_bufferbloat_packages
                       # Read: https://openwrt.org/docs/guide-user/network/traffic-shaping/sqm-details#sqmlink_layer_adaptation_tab
 
 ## Only use these presets or keywords if you don't write a value above in "OVERHEAD", "MPU" and "LINK_COMPENSATION".
-COMMON_LINK_PRESETS="Ethernet"  # Write the keyword below:
+COMMON_LINK_PRESETS="conservative"  # Write the keyword below:
                                     # "raw"              Failsafe     (Turns off all overhead compensation)
                                     # "conservative"     Failsafe     (overhead 48 - atm)
                                     # "ethernet"         Ethernet     (overhead 38 - mpu 84 - noatm)
@@ -72,7 +72,7 @@ ETHER_VLAN_KEYWORD="3"  # Write values between "1" and "3" or don't write any va
                        # Read: https://man7.org/linux/man-pages/man8/tc-cake.8.html#OVERHEAD_COMPENSATION_PARAMETERS
 
 PRIORITY_QUEUE_INGRESS="diffserv4"  # Write: "besteffort" | "diffserv3" | "diffserv4" | "diffserv8"
-PRIORITY_QUEUE_EGRESS="diffserv4"   # Write: "besteffort" | "diffserv3" | "diffserv4" | "diffserv8"
+PRIORITY_QUEUE_EGRESS="diffserv8"   # Write: "besteffort" | "diffserv3" | "diffserv4" | "diffserv8"
                                     # CAKE can divide traffic into tins based on the Diffserv field.
                                     # "besteffort" only has 'one tin' or priority tier.
                                     # "diffserv3" has '3 tins' or different priority tiers.
@@ -113,7 +113,7 @@ ACK_FILTER_EGRESS="yes"  # Write: "yes" | "no" | "auto"
                           # Don't recommend turning it on more symmetrical link bandwidths the effect is negligible at best.
 
 ## Don't write 'ms', just write the number.
-RTT="85"  # Write values between "1" and "1000" or don't write any value to use the default value (100).
+RTT="250"  # Write values between "1" and "1000" or don't write any value to use the default value (100).
         # This parameter defines the time window that your shaper will give the endpoints to react to shaping signals (drops or ECN).
         # The default "100ms" is pretty decent that works for many people, assuming their packets don't always need to cross long distances.
         # If you are based in Europe and access data in California I would assume 200-300ms to be a better value.
@@ -191,7 +191,7 @@ UDP_DST_BULK_PORTS="6881-6887, 51413"
 
 
 ## Other ports [OPTIONAL]
-DSCP_OTHER_PORTS="AF22"  # Change this DSCP value to whatever you want.
+DSCP_OTHER_PORTS="AF32"  # Change this DSCP value to whatever you want.
 
 TCP_SRC_OTHER_PORTS=""
 TCP_DST_OTHER_PORTS=""
@@ -239,7 +239,7 @@ IPV6_TORRENTBOX_STATIC_IP="IPv6::10"
 
 
 ## Other static IP addresses [OPTIONAL]
-DSCP_OTHER_STATIC_IP="TOS4"  # Change this DSCP value to whatever you want.
+DSCP_OTHER_STATIC_IP="TOS2"  # Change this DSCP value to whatever you want.
 
 IPV4_OTHER_STATIC_IP="192.168.1.106-192.168.1.240"
 IPV6_OTHER_STATIC_IP=""
