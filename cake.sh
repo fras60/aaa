@@ -9,14 +9,6 @@ WAN="eth1"
 WAN="pppoe-wan"
 
 ######################################################################################################################
-### Download methods ###
-
-DOWN_METHOD="veth"  # Write: "veth" | "normal"
-                    # "veth"   The 'DSCP marks' work on download and upload in "Cake".
-                    # "normal" The 'DSCP marks' only work on upload in "Cake".
-
-
-######################################################################################################################
 
 
 ### CAKE settings ###
@@ -35,14 +27,14 @@ AUTORATE_INGRESS="no"  # Write: "yes" | "no"
 
 ## Make sure you set these parameters correctly for your connection type or don't write any value and use a presets or keywords below.
 OVERHEAD="40"           # Write values between "-64" and "256"
-MPU="164"                # Write values between "0" and "256"
-LINK_COMPENSATION="atm"  # Write: "atm" | "ptm" | "noatm"
+MPU="124"                # Write values between "0" and "256"
+LINK_COMPENSATION="ptm"  # Write: "atm" | "ptm" | "noatm"
                       # These values overwrite the presets or keyboards below.
                       # Read: https://openwrt.org/docs/guide-user/network/traffic-shaping/sqm#configuring_the_sqm_bufferbloat_packages
                       # Read: https://openwrt.org/docs/guide-user/network/traffic-shaping/sqm-details#sqmlink_layer_adaptation_tab
 
 ## Only use these presets or keywords if you don't write a value above in "OVERHEAD", "MPU" and "LINK_COMPENSATION".
-COMMON_LINK_PRESETS="conservative"  # Write the keyword below:
+COMMON_LINK_PRESETS="pppoe-llcsnap"  # Write the keyword below:
                                     # "raw"              Failsafe     (Turns off all overhead compensation)
                                     # "conservative"     Failsafe     (overhead 48 - atm)
                                     # "ethernet"         Ethernet     (overhead 38 - mpu 84 - noatm)
@@ -85,7 +77,7 @@ HOST_ISOLATION="yes"  # Write: "yes" | "no"
                       # that has multiple connections (like when torrenting) from hogging all the bandwidth
                       # and provides better traffic management when multiple hosts/clients are using the internet at the same time.
 
-NAT_INGRESS="yes"  # Write: "yes" | "no"
+NAT_INGRESS="no"  # Write: "yes" | "no"
 NAT_EGRESS="yes"  # Write: "yes" | "no"
                   # Perform a NAT lookup before applying 'host isolation' rules to improve fairness between hosts "inside" the NAT.
                   # Don't use "nat" parameter on 'ingress' when use "veth method" or 'host isolation' stops working.
@@ -114,7 +106,7 @@ ACK_FILTER_EGRESS="yes"  # Write: "yes" | "no" | "auto"
                           # Don't recommend turning it on more symmetrical link bandwidths the effect is negligible at best.
 
 ## Don't write 'ms', just write the number.
-RTT="250"  # Write values between "1" and "1000" or don't write any value to use the default value (100).
+RTT="85"  # Write values between "1" and "1000" or don't write any value to use the default value (100).
         # This parameter defines the time window that your shaper will give the endpoints to react to shaping signals (drops or ECN).
         # The default "100ms" is pretty decent that works for many people, assuming their packets don't always need to cross long distances.
         # If you are based in Europe and access data in California I would assume 200-300ms to be a better value.
@@ -192,7 +184,7 @@ UDP_DST_BULK_PORTS="6881-6887, 51413"
 
 
 ## Other ports [OPTIONAL]
-DSCP_OTHER_PORTS="AF32"  # Change this DSCP value to whatever you want.
+DSCP_OTHER_PORTS="TOS2"  # Change this DSCP value to whatever you want.
 
 TCP_SRC_OTHER_PORTS="1-65535"
 TCP_DST_OTHER_PORTS="53,5353"
