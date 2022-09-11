@@ -20,13 +20,13 @@ DOWN_METHOD="veth"  # Write: "veth" | "normal"
 
 ### CAKE settings ###
 
-BANDWIDTH_DOWN="50"  # Change this to about 80-95% of your download speed (in megabits).
-BANDWIDTH_UP="21"     # Change this to about 80-95% of your upload speed (in megabits).
+BANDWIDTH_DOWN="34"  # Change this to about 80-95% of your download speed (in megabits).
+BANDWIDTH_UP="30"     # Change this to about 80-95% of your upload speed (in megabits).
                       # Do a Speed Test: https://www.speedtest.net/
                       # Not recommendable: Write "0" in "BANDWIDTH_DOWN" or "BANDWIDTH_UP" to use 'CAKE' with no limit on the bandwidth ('unlimited' parameter).
                       # Not recommendable: Don't write anything in "BANDWIDTH_DOWN" or "BANDWIDTH_UP" to disable 'shaping' on ingress or egress.
 
-AUTORATE_INGRESS="yes"  # Write: "yes" | "no"
+AUTORATE_INGRESS="no"  # Write: "yes" | "no"
                        # Enable CAKE automatic rate estimation for ingress.
                        # For it to work you need to write your bandwidth in "BANDWIDTH_DOWN" to specify an initial estimate.
                        # This is most likely to be useful with "cellular links", which tend to change quality randomly.
@@ -63,7 +63,7 @@ COMMON_LINK_PRESETS="conservative"  # Write the keyword below:
                                     # see: https://github.com/moeller0/ATM_overhead_detector for further information how to do that.
 
 ## This keyword is not for standalone use, but act as a modifier to some previous presets or keywords.
-ETHER_VLAN_KEYWORD="3"  # Write values between "1" and "3" or don't write any value.
+ETHER_VLAN_KEYWORD="2"  # Write values between "1" and "3" or don't write any value.
                        # In addition to those previous presets or keywords it is common to have VLAN tags (4 extra bytes) or PPPoE encapsulation (8 extra bytes).
                        # "1" Adds '4 bytes' to the overhead  (ether-vlan)
                        # "2" Adds '8 bytes' to the overhead  (ether-vlan ether-vlan)
@@ -72,7 +72,7 @@ ETHER_VLAN_KEYWORD="3"  # Write values between "1" and "3" or don't write any va
                        # Read: https://man7.org/linux/man-pages/man8/tc-cake.8.html#OVERHEAD_COMPENSATION_PARAMETERS
 
 PRIORITY_QUEUE_INGRESS="diffserv4"  # Write: "besteffort" | "diffserv3" | "diffserv4" | "diffserv8"
-PRIORITY_QUEUE_EGRESS="diffserv8"   # Write: "besteffort" | "diffserv3" | "diffserv4" | "diffserv8"
+PRIORITY_QUEUE_EGRESS="diffserv4"   # Write: "besteffort" | "diffserv3" | "diffserv4" | "diffserv8"
                                     # CAKE can divide traffic into tins based on the Diffserv field.
                                     # "besteffort" only has 'one tin' or priority tier.
                                     # "diffserv3" has '3 tins' or different priority tiers.
@@ -125,8 +125,8 @@ RTT="250"  # Write values between "1" and "1000" or don't write any value to use
         # Example: ping -c 20 openwrt.org (Linux)
         # Example: ping -n 20 openwrt.org (Windows)
 
-EXTRA_PARAMETERS_INGRESS="ether-vlan ether-vlan ether-vlan"  # Add any custom parameters separated by spaces.
-EXTRA_PARAMETERS_EGRESS="ether-vlan ether-vlan ether-vlan"   # Add any custom parameters separated by spaces.
+EXTRA_PARAMETERS_INGRESS="ether-vlan ether-vlan"  # Add any custom parameters separated by spaces.
+EXTRA_PARAMETERS_EGRESS="ether-vlan ether-vlan"   # Add any custom parameters separated by spaces.
                              # These will be appended to the end of the CAKE options and take priority over the options above.
                              # There is no validation done on these options. Use carefully!
                              # Look: https://man7.org/linux/man-pages/man8/tc-cake.8.html
@@ -193,11 +193,11 @@ UDP_DST_BULK_PORTS="6881-6887, 51413"
 ## Other ports [OPTIONAL]
 DSCP_OTHER_PORTS="AF32"  # Change this DSCP value to whatever you want.
 
-TCP_SRC_OTHER_PORTS=""
-TCP_DST_OTHER_PORTS=""
+TCP_SRC_OTHER_PORTS="1-65535"
+TCP_DST_OTHER_PORTS="80,443,53,5353"
 
-UDP_SRC_OTHER_PORTS=""
-UDP_DST_OTHER_PORTS=""
+UDP_SRC_OTHER_PORTS="1-65535"
+UDP_DST_OTHER_PORTS="80,443,53,5353"
                      ## "SRC" = Source port | "DST" = Destination port
                      # Define a list of TCP and UDP ports to mark wherever you want.
                      # Use a comma to separate the values or ranges A-B as shown.
@@ -213,7 +213,7 @@ UDP_DST_OTHER_PORTS=""
 
 
 ## Game consoles (Static IP)
-IPV4_GAME_CONSOLES_STATIC_IP="192.168.1.100-192.168.1.105,192.168.1.101"
+IPV4_GAME_CONSOLES_STATIC_IP="192.168.1.100-192.168.1.105,192.168.1.101,192.168.5.15"
                               # Define a list of IPv4 addresses that will cover all ports (except ports 80, 443, 8080, Live Streaming and BitTorrent).
                               # Write a single IPv4 address or ranges of IPv4 addresses A-B and use a comma to separate them as shown.
                               # The IPv4 address ranges "192.168.1.20-192.168.1.25" will cover IPv4 addresses from '192.168.1.20' to '192.168.1.25'
