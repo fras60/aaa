@@ -27,7 +27,7 @@ BANDWIDTH_UP="30"     # Change this to about 80-95% of your upload speed (in meg
                       # Not recommendable: Write "0" in "BANDWIDTH_DOWN" or "BANDWIDTH_UP" to use 'CAKE' with no limit on the bandwidth ('unlimited' parameter).
                       # Not recommendable: Don't write anything in "BANDWIDTH_DOWN" or "BANDWIDTH_UP" to disable 'shaping' on ingress or egress.
 
-AUTORATE_INGRESS="no"  # Write: "yes" | "no"
+AUTORATE_INGRESS="yes"  # Write: "yes" | "no"
                        # Enable CAKE automatic rate estimation for ingress.
                        # For it to work you need to write your bandwidth in "BANDWIDTH_DOWN" to specify an initial estimate.
                        # This is most likely to be useful with "cellular links", which tend to change quality randomly.
