@@ -6,6 +6,7 @@
 
 ## Go to "Network -> Interfaces" and write the name of your "WAN" interface.
 WAN="eth1"
+WAN="pppoe-wan"
 
 ######################################################################################################################
 ### Download methods ###
