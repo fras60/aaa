@@ -13,7 +13,7 @@ WAN="pppoe-wan"
 
 ### CAKE settings ###
 
-BANDWIDTH_DOWN="53"  # Change this to about 80-95% of your download speed (in megabits).
+BANDWIDTH_DOWN="49"  # Change this to about 80-95% of your download speed (in megabits).
 BANDWIDTH_UP="30"     # Change this to about 80-95% of your upload speed (in megabits).
                       # Do a Speed Test: https://www.speedtest.net/
                       # Not recommendable: Write "0" in "BANDWIDTH_DOWN" or "BANDWIDTH_UP" to use 'CAKE' with no limit on the bandwidth ('unlimited' parameter).
@@ -26,9 +26,9 @@ AUTORATE_INGRESS="no"  # Write: "yes" | "no"
                        # If you don't have "cellular link", you should never use this option.
 
 ## Make sure you set these parameters correctly for your connection type or don't write any value and use a presets or keywords below.
-OVERHEAD="40"           # Write values between "-64" and "256"
-MPU="124"                # Write values between "0" and "256"
-LINK_COMPENSATION="ptm"  # Write: "atm" | "ptm" | "noatm"
+OVERHEAD="54"           # Write values between "-64" and "256"
+MPU="86"                # Write values between "0" and "256"
+LINK_COMPENSATION="atm"  # Write: "atm" | "ptm" | "noatm"
                       # These values overwrite the presets or keyboards below.
                       # Read: https://openwrt.org/docs/guide-user/network/traffic-shaping/sqm#configuring_the_sqm_bufferbloat_packages
                       # Read: https://openwrt.org/docs/guide-user/network/traffic-shaping/sqm-details#sqmlink_layer_adaptation_tab
@@ -77,7 +77,7 @@ HOST_ISOLATION="yes"  # Write: "yes" | "no"
                       # that has multiple connections (like when torrenting) from hogging all the bandwidth
                       # and provides better traffic management when multiple hosts/clients are using the internet at the same time.
 
-NAT_INGRESS="no"  # Write: "yes" | "no"
+NAT_INGRESS="yes"  # Write: "yes" | "no"
 NAT_EGRESS="yes"  # Write: "yes" | "no"
                   # Perform a NAT lookup before applying 'host isolation' rules to improve fairness between hosts "inside" the NAT.
                   # Don't use "nat" parameter on 'ingress' when use "veth method" or 'host isolation' stops working.
@@ -90,7 +90,7 @@ WASH_EGRESS="yes"  # Write: "yes" | "no"
                    # Wash outgoing (egress) DSCP marking to ISP, because may be mis-marked from ISP perspective.
                    ## Recommendation: Don't use "wash" on ingress so that the "Wi-Fi Multimedia (WMM) QoS" can make use of the custom DSCP marking and just use "wash" on egress.
 
-INGRESS_MODE="yes"  # Write: "yes" | "no"
+INGRESS_MODE="no"  # Write: "yes" | "no"
                     # Enabling "ingress mode" ('ingress' parameter) will tune the AQM to always keep at least two packets queued *for each flow*.
                     # Basically will drop and/or delay packets in a way that the rate of packets leaving the shaper is smaller or equal to the configured shaper-rate.
                     # This leads to slightly more aggressive dropping, but this also ameliorates one issue we have with post-bottleneck shaping,
@@ -106,7 +106,7 @@ ACK_FILTER_EGRESS="yes"  # Write: "yes" | "no" | "auto"
                           # Don't recommend turning it on more symmetrical link bandwidths the effect is negligible at best.
 
 ## Don't write 'ms', just write the number.
-RTT="85"  # Write values between "1" and "1000" or don't write any value to use the default value (100).
+RTT="150"  # Write values between "1" and "1000" or don't write any value to use the default value (100).
         # This parameter defines the time window that your shaper will give the endpoints to react to shaping signals (drops or ECN).
         # The default "100ms" is pretty decent that works for many people, assuming their packets don't always need to cross long distances.
         # If you are based in Europe and access data in California I would assume 200-300ms to be a better value.
@@ -118,7 +118,7 @@ RTT="85"  # Write values between "1" and "1000" or don't write any value to use 
         # Example: ping -c 20 openwrt.org (Linux)
         # Example: ping -n 20 openwrt.org (Windows)
 
-EXTRA_PARAMETERS_INGRESS="ether-vlan ether-vlan"  # Add any custom parameters separated by spaces.
+EXTRA_PARAMETERS_INGRESS="ether-vlan ether-vlan split-gso"  # Add any custom parameters separated by spaces.
 EXTRA_PARAMETERS_EGRESS="ether-vlan ether-vlan"   # Add any custom parameters separated by spaces.
                              # These will be appended to the end of the CAKE options and take priority over the options above.
                              # There is no validation done on these options. Use carefully!
@@ -184,7 +184,7 @@ UDP_DST_BULK_PORTS="6881-6887, 51413"
 
 
 ## Other ports [OPTIONAL]
-DSCP_OTHER_PORTS="TOS2"  # Change this DSCP value to whatever you want.
+DSCP_OTHER_PORTS="EF"  # Change this DSCP value to whatever you want.
 
 TCP_SRC_OTHER_PORTS="1-65535"
 TCP_DST_OTHER_PORTS="53,5353"
@@ -232,7 +232,7 @@ IPV6_TORRENTBOX_STATIC_IP="IPv6::10"
 
 
 ## Other static IP addresses [OPTIONAL]
-DSCP_OTHER_STATIC_IP="TOS4"  # Change this DSCP value to whatever you want.
+DSCP_OTHER_STATIC_IP="AF32"  # Change this DSCP value to whatever you want.
 
 IPV4_OTHER_STATIC_IP="192.168.1.106-192.168.1.240"
 IPV6_OTHER_STATIC_IP=""
@@ -255,7 +255,7 @@ TCP_CONGESTION_CONTROL="bbr"  # Write: "cubic" | "bbr"
                               # "bbr"   The algorithm that was developed by Google and is since used on YouTube, maybe this can improve network response.
 
 
-ECN="2"  # Write values between "0" and "2"
+ECN="1"  # Write values between "0" and "2"
          # "0" Disable ECN. Neither initiate nor accept ECN. (Default in OpenWrt)
          # "1" Enable ECN. When requested by incoming connections and also request ECN on outgoing connection attempts.
          # "2" Enable ECN. When requested by incoming connections, but do not request ECN on outgoing connections.
