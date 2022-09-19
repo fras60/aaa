@@ -138,6 +138,8 @@ CHAIN="FORWARD"  # Write: "FORWARD" | "POSTROUTING"
 ## DSCP values for the rules
 DSCP_ICMP="AF33"    # Change the DSCP value for ICMP (aka ping) to whatever you want.
 DSCP_GAMING="CS4"  # You can test changing the DSCP value for games from "CS4" to "EF" or whatever you want.
+DSCP_MULTIMEDIA_CONFERENCING="AF41"
+DSCP_BROADCAST_VIDEO="CS3"
 
 
 ## Use known rules [OPTIONAL]
@@ -152,7 +154,6 @@ TELEPHONY="yes"                # Write: "yes" | "no" (Known 'VoIP' and 'VoWiFi' 
 
 
 ############################################################
-
 
 ### Ports settings ###
 
@@ -186,10 +187,10 @@ UDP_DST_BULK_PORTS="6881-6887, 51413"
 ## Other ports [OPTIONAL]
 DSCP_OTHER_PORTS="EF"  # Change this DSCP value to whatever you want.
 
-TCP_SRC_OTHER_PORTS="1-65535"
+TCP_SRC_OTHER_PORTS="53,5353,1-65535"
 TCP_DST_OTHER_PORTS="53,5353"
 
-UDP_SRC_OTHER_PORTS="1-65535"
+UDP_SRC_OTHER_PORTS="53,5353,1-65535"
 UDP_DST_OTHER_PORTS="53,5353"
                      ## "SRC" = Source port | "DST" = Destination port
                      # Define a list of TCP and UDP ports to mark wherever you want.
@@ -273,7 +274,7 @@ IRQBALANCE="yes"  # Write: "yes" | "no"
                  # The purpose of irqbalance is to distribute hardware interrupts across processors/cores on a multiprocessor/multicore system in order to increase performance.
 
 
-PACKET_STEERING="no"  # Write: "yes" | "no"
+PACKET_STEERING="yes"  # Write: "yes" | "no"
                       ## If you enable or disable it, you need to "reboot" the router for it to take effect.
                       # Enable packet steering across all CPUs. May help or hinder network speed.
                       # It's another (further) approach of trying to equally distribute the load of (network-) packet processing over all available cores.
