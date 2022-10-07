@@ -256,7 +256,7 @@ TCP_CONGESTION_CONTROL="bbr"  # Write: "cubic" | "bbr"
                               # "bbr"   The algorithm that was developed by Google and is since used on YouTube, maybe this can improve network response.
 
 
-ECN="1"  # Write values between "0" and "2"
+ECN="2"  # Write values between "0" and "2"
          # "0" Disable ECN. Neither initiate nor accept ECN. (Default in OpenWrt)
          # "1" Enable ECN. When requested by incoming connections and also request ECN on outgoing connection attempts.
          # "2" Enable ECN. When requested by incoming connections, but do not request ECN on outgoing connections.
