@@ -26,9 +26,9 @@ AUTORATE_INGRESS="no"  # Write: "yes" | "no"
                        # If you don't have "cellular link", you should never use this option.
 
 ## Make sure you set these parameters correctly for your connection type or don't write any value and use a presets or keywords below.
-OVERHEAD="48"           # Write values between "-64" and "256"
-MPU="86"                # Write values between "0" and "256"
-LINK_COMPENSATION="noatm"  # Write: "atm" | "ptm" | "noatm"
+OVERHEAD="58"           # Write values between "-64" and "256"
+MPU="56"                # Write values between "0" and "256"
+LINK_COMPENSATION="atm"  # Write: "atm" | "ptm" | "noatm"
                       # These values overwrite the presets or keyboards below.
                       # Read: https://openwrt.org/docs/guide-user/network/traffic-shaping/sqm#configuring_the_sqm_bufferbloat_packages
                       # Read: https://openwrt.org/docs/guide-user/network/traffic-shaping/sqm-details#sqmlink_layer_adaptation_tab
@@ -90,7 +90,7 @@ WASH_EGRESS="yes"  # Write: "yes" | "no"
                    # Wash outgoing (egress) DSCP marking to ISP, because may be mis-marked from ISP perspective.
                    ## Recommendation: Don't use "wash" on ingress so that the "Wi-Fi Multimedia (WMM) QoS" can make use of the custom DSCP marking and just use "wash" on egress.
 
-INGRESS_MODE="yes"  # Write: "yes" | "no"
+INGRESS_MODE="no"  # Write: "yes" | "no"
                     # Enabling "ingress mode" ('ingress' parameter) will tune the AQM to always keep at least two packets queued *for each flow*.
                     # Basically will drop and/or delay packets in a way that the rate of packets leaving the shaper is smaller or equal to the configured shaper-rate.
                     # This leads to slightly more aggressive dropping, but this also ameliorates one issue we have with post-bottleneck shaping,
@@ -98,7 +98,7 @@ INGRESS_MODE="yes"  # Write: "yes" | "no"
                     # Thus, being more lenient and keeping a minimum number of packets queued will improve throughput in cases
                     # where the number of active flows are so large that they saturate the bottleneck even at their minimum window size.
 
-ACK_FILTER_EGRESS="yes"  # Write: "yes" | "no" | "auto"
+ACK_FILTER_EGRESS="auto"  # Write: "yes" | "no" | "auto"
                           # Write "auto" or don't write anything, so that the script decide to use this parameter, depending on the bandwidth you wrote in "BANDWIDTH_DOWN" and "BANDWIDTH_UP".
                           # If your up/down bandwidth is at least 1x15 asymmetric, you can try the 'ack-filter' option.
                           # It doesn't help on your downlink, nor on symmetric links.
@@ -187,7 +187,7 @@ UDP_DST_BULK_PORTS="6881-6887, 51413"
 ## Other ports [OPTIONAL]
 DSCP_OTHER_PORTS="AF11"  # Change this DSCP value to whatever you want.
 
-TCP_SRC_OTHER_PORTS="5353,1-65535"
+TCP_SRC_OTHER_PORTS="53,5353,1-65535"
 TCP_DST_OTHER_PORTS="53,5353"
 
 UDP_SRC_OTHER_PORTS="53,5353,1-65535"
@@ -233,7 +233,7 @@ IPV6_TORRENTBOX_STATIC_IP="IPv6::10"
 
 
 ## Other static IP addresses [OPTIONAL]
-DSCP_OTHER_STATIC_IP="AF21"  # Change this DSCP value to whatever you want.
+DSCP_OTHER_STATIC_IP="EF"  # Change this DSCP value to whatever you want.
 
 IPV4_OTHER_STATIC_IP="192.168.1.106-192.168.1.240"
 IPV6_OTHER_STATIC_IP=""
