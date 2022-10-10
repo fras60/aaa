@@ -28,7 +28,7 @@ AUTORATE_INGRESS="no"  # Write: "yes" | "no"
 ## Make sure you set these parameters correctly for your connection type or don't write any value and use a presets or keywords below.
 OVERHEAD="58"           # Write values between "-64" and "256"
 MPU="124"                # Write values between "0" and "256"
-LINK_COMPENSATION="conservative"  # Write: "atm" | "ptm" | "noatm"
+LINK_COMPENSATION="atm"  # Write: "atm" | "ptm" | "noatm"
                       # These values overwrite the presets or keyboards below.
                       # Read: https://openwrt.org/docs/guide-user/network/traffic-shaping/sqm#configuring_the_sqm_bufferbloat_packages
                       # Read: https://openwrt.org/docs/guide-user/network/traffic-shaping/sqm-details#sqmlink_layer_adaptation_tab
