@@ -4,9 +4,9 @@
 
 ### Interfaces ###
 
-## Go to "Network -> Interfaces" and write the name of your "WAN" interface.
-WAN="eth1"
-WAN="pppoe-wan"
+## Go to "Network -> Interfaces" and write the name of the "device" used for the 'WAN' interface.
+WAN="eth1"  # Example: eth0, eth0.2, eth1, eth1.2, wan, etc.
+
 
 ######################################################################################################################
 
@@ -28,7 +28,7 @@ AUTORATE_INGRESS="no"  # Write: "yes" | "no"
 ## Make sure you set these parameters correctly for your connection type or don't write any value and use a presets or keywords below.
 OVERHEAD="58"           # Write values between "-64" and "256"
 MPU="124"                # Write values between "0" and "256"
-LINK_COMPENSATION="atm"  # Write: "atm" | "ptm" | "noatm"
+LINK_COMPENSATION="conservative"  # Write: "atm" | "ptm" | "noatm"
                       # These values overwrite the presets or keyboards below.
                       # Read: https://openwrt.org/docs/guide-user/network/traffic-shaping/sqm#configuring_the_sqm_bufferbloat_packages
                       # Read: https://openwrt.org/docs/guide-user/network/traffic-shaping/sqm-details#sqmlink_layer_adaptation_tab
@@ -106,7 +106,7 @@ ACK_FILTER_EGRESS="auto"  # Write: "yes" | "no" | "auto"
                           # Don't recommend turning it on more symmetrical link bandwidths the effect is negligible at best.
 
 ## Don't write 'ms', just write the number.
-RTT="180"  # Write values between "1" and "1000" or don't write any value to use the default value (100).
+RTT="160"  # Write values between "1" and "1000" or don't write any value to use the default value (100).
         # This parameter defines the time window that your shaper will give the endpoints to react to shaping signals (drops or ECN).
         # The default "100ms" is pretty decent that works for many people, assuming their packets don't always need to cross long distances.
         # If you are based in Europe and access data in California I would assume 200-300ms to be a better value.
@@ -118,8 +118,8 @@ RTT="180"  # Write values between "1" and "1000" or don't write any value to use
         # Example: ping -c 20 openwrt.org (Linux)
         # Example: ping -n 20 openwrt.org (Windows)
 
-EXTRA_PARAMETERS_INGRESS="ether-vlan ether-vlan"  # Add any custom parameters separated by spaces.
-EXTRA_PARAMETERS_EGRESS="ether-vlan ether-vlan"   # Add any custom parameters separated by spaces.
+EXTRA_PARAMETERS_INGRESS=""  # Add any custom parameters separated by spaces.
+EXTRA_PARAMETERS_EGRESS=""   # Add any custom parameters separated by spaces.
                              # These will be appended to the end of the CAKE options and take priority over the options above.
                              # There is no validation done on these options. Use carefully!
                              # Look: https://man7.org/linux/man-pages/man8/tc-cake.8.html
@@ -136,15 +136,14 @@ CHAIN="FORWARD"  # Write: "FORWARD" | "POSTROUTING"
 
 
 ## DSCP values for the rules
-DSCP_ICMP="AF11"    # Change the DSCP value for ICMP (aka ping) to whatever you want.
+DSCP_ICMP="CS0"    # Change the DSCP value for ICMP (aka ping) to whatever you want.
 DSCP_GAMING="CS4"  # You can test changing the DSCP value for games from "CS4" to "EF" or whatever you want.
-DSCP_MULTIMEDIA_CONFERENCING="AF41"
-DSCP_BROADCAST_VIDEO="CS3"
 
 
 ## Use known rules [OPTIONAL]
 BROADCAST_VIDEO="yes"          # Write: "yes" | "no" (Known 'Live Streaming' ports to CS3 like YouTube Live, Twitch, Vimeo and LinkedIn Live)
 GAMING="yes"                   # Write: "yes" | "no" (Known 'Game' ports and 'Game consoles' ports to CS4 like Xbox, PlayStation, Call of Duty, FIFA, Minecraft and Supercell Games)
+GAME_STREAMING="yes"           # Write: "yes" | "no" (Known 'Game Streaming' ports to AF42 like NVIDIA GeForce NOW and Google Stadia)
 MULTIMEDIA_CONFERENCING="yes"  # Write: "yes" | "no" (Known 'Video conferencing' ports to AF41 like Zoom, Microsoft Teams, Skype, FaceTime, GoToMeeting, Webex Meeting, Jitsi Meet, Google Meet and TeamViewer)
 TELEPHONY="yes"                # Write: "yes" | "no" (Known 'VoIP' and 'VoWiFi' ports to EF)
 
@@ -154,6 +153,7 @@ TELEPHONY="yes"                # Write: "yes" | "no" (Known 'VoIP' and 'VoWiFi' 
 
 
 ############################################################
+
 
 ### Ports settings ###
 
@@ -185,7 +185,7 @@ UDP_DST_BULK_PORTS="6881-6887, 51413"
 
 
 ## Other ports [OPTIONAL]
-DSCP_OTHER_PORTS=""  # Change this DSCP value to whatever you want.
+DSCP_OTHER_PORTS="CS0"  # Change this DSCP value to whatever you want.
 
 TCP_SRC_OTHER_PORTS=""
 TCP_DST_OTHER_PORTS=""
@@ -207,7 +207,7 @@ UDP_DST_OTHER_PORTS=""
 
 
 ## Game consoles (Static IP)
-IPV4_GAME_CONSOLES_STATIC_IP="192.168.1.100-192.168.1.105,192.168.1.101"
+IPV4_GAME_CONSOLES_STATIC_IP="192.168.1.101, 192.168.1.100-192.168.1.106"
                               # Define a list of IPv4 addresses that will cover all ports (except ports 80, 443, 8080, Live Streaming and BitTorrent).
                               # Write a single IPv4 address or ranges of IPv4 addresses A-B and use a comma to separate them as shown.
                               # The IPv4 address ranges "192.168.1.20-192.168.1.25" will cover IPv4 addresses from '192.168.1.20' to '192.168.1.25'
@@ -233,9 +233,9 @@ IPV6_TORRENTBOX_STATIC_IP="IPv6::10"
 
 
 ## Other static IP addresses [OPTIONAL]
-DSCP_OTHER_STATIC_IP=""  # Change this DSCP value to whatever you want.
+DSCP_OTHER_STATIC_IP="CS0"  # Change this DSCP value to whatever you want.
 
-IPV4_OTHER_STATIC_IP="192.168.1.106-192.168.1.240"
+IPV4_OTHER_STATIC_IP=""
 IPV6_OTHER_STATIC_IP=""
                       # Define a list of IP addresses to mark 'all traffic' wherever you want.
                       # Write a single IPv4 and IPv6 address or ranges of IP addresses A-B and use a comma to separate them as shown.
@@ -247,19 +247,19 @@ IPV6_OTHER_STATIC_IP=""
 ### Change default OpenWrt settings ###
 
 DEFAULT_QDISC="cake"  # Write: "fq_codel" | "cake"
-                      # "fq_codel" Great all around qdisc. (Default in OpenWrt)
-                      # "cake"     Great for WAN links, but computationally expensive with little advantages over 'fq_codel' for LAN links.
+                          # "fq_codel" Great all around qdisc. (Default in OpenWrt)
+                          # "cake"     Great for WAN links, but computationally expensive with little advantages over 'fq_codel' for LAN links.
 
 
 TCP_CONGESTION_CONTROL="bbr"  # Write: "cubic" | "bbr"
-                              # "cubic" The default algorithm for most Linux platforms. (Default in OpenWrt)
-                              # "bbr"   The algorithm that was developed by Google and is since used on YouTube, maybe this can improve network response.
+                                # "cubic" The default algorithm for most Linux platforms. (Default in OpenWrt)
+                                # "bbr"   The algorithm that was developed by Google and is since used on YouTube, maybe this can improve network response.
 
 
-ECN="1"  # Write values between "0" and "2"
-         # "0" Disable ECN. Neither initiate nor accept ECN. (Default in OpenWrt)
+ECN="2"  # Write values between "0" and "2"
+         # "0" Disable ECN. Neither initiate nor accept ECN.
          # "1" Enable ECN. When requested by incoming connections and also request ECN on outgoing connection attempts.
-         # "2" Enable ECN. When requested by incoming connections, but do not request ECN on outgoing connections.
+         # "2" Enable ECN. When requested by incoming connections, but do not request ECN on outgoing connections. (Default in OpenWrt)
          # Read: https://www.bufferbloat.net/projects/cerowrt/wiki/Enable_ECN/
 
 
@@ -348,13 +348,13 @@ case $ECN in
     0) ECN="0" ;;
     1) ECN="1" ;;
     2) ECN="2" ;;
-    *) ECN="0" ;;
+    *) ECN="2" ;;
 esac
 
 ## Add the settings in "sysctl.conf"
-grep "default_qdisc" /etc/sysctl.conf > /dev/null 2>&1 || sed -i "2i net.core.default_qdisc=$DEFAULT_QDISC" /etc/sysctl.conf > /dev/null 2>&1
-grep "tcp_congestion_control" /etc/sysctl.conf > /dev/null 2>&1 || sed -i "3i net.ipv4.tcp_congestion_control=$TCP_CONGESTION_CONTROL" /etc/sysctl.conf > /dev/null 2>&1
-grep "tcp_ecn" /etc/sysctl.conf > /dev/null 2>&1 || sed -i "4i net.ipv4.tcp_ecn=$ECN" /etc/sysctl.conf > /dev/null 2>&1
+grep "tcp_ecn" /etc/sysctl.conf > /dev/null 2>&1 || sed -i "/#/a net.ipv4.tcp_ecn=$ECN" /etc/sysctl.conf > /dev/null 2>&1
+grep "tcp_congestion_control" /etc/sysctl.conf > /dev/null 2>&1 || sed -i "/#/a net.ipv4.tcp_congestion_control=$TCP_CONGESTION_CONTROL" /etc/sysctl.conf > /dev/null 2>&1
+grep "default_qdisc" /etc/sysctl.conf > /dev/null 2>&1 || sed -i "/#/a net.core.default_qdisc=$DEFAULT_QDISC" /etc/sysctl.conf > /dev/null 2>&1
 
 ## Change the values
 grep "default_qdisc" /etc/sysctl.conf | grep "$DEFAULT_QDISC" > /dev/null 2>&1 || sed -i "/default_qdisc/s/=.*/=$DEFAULT_QDISC/" /etc/sysctl.conf > /dev/null 2>&1
@@ -625,7 +625,7 @@ stop_service() {
     ## Restore default OpenWrt settings
     sysctl -w net.core.default_qdisc=fq_codel > /dev/null 2>&1
     sysctl -w net.ipv4.tcp_congestion_control=cubic > /dev/null 2>&1
-    sysctl -w net.ipv4.tcp_ecn=0 > /dev/null 2>&1
+    sysctl -w net.ipv4.tcp_ecn=2 > /dev/null 2>&1
 
     ############################################################
 
@@ -769,6 +769,10 @@ case $GAMING in
     yes) GAMING="yes" ;;
     *) GAMING="no" ;;
 esac
+case $GAME_STREAMING in
+    yes) GAME_STREAMING="yes" ;;
+    *) GAME_STREAMING="no" ;;
+esac
 case $MULTIMEDIA_CONFERENCING in
     yes) MULTIMEDIA_CONFERENCING="yes" ;;
     *) MULTIMEDIA_CONFERENCING="no" ;;
@@ -805,6 +809,11 @@ if [ "$GAMING" = "yes" ]; then
     CHECK_GAMING="$(grep "Known game ports" /etc/nftables.d/00-rules.nft | grep "    " > /dev/null 2>&1 && echo "yes")" > /dev/null 2>&1
 elif [ "$GAMING" != "yes" ]; then
     CHECK_GAMING="$(grep "Known game ports" /etc/nftables.d/00-rules.nft | grep "#   " > /dev/null 2>&1 && echo "no")" > /dev/null 2>&1
+fi
+if [ "$GAME_STREAMING" = "yes" ]; then
+    CHECK_GAME_STREAMING="$(grep "Known game streaming" /etc/nftables.d/00-rules.nft | grep "    " > /dev/null 2>&1 && echo "yes")" > /dev/null 2>&1
+elif [ "$GAME_STREAMING" != "yes" ]; then
+    CHECK_GAME_STREAMING="$(grep "Known game streaming" /etc/nftables.d/00-rules.nft | grep "#   " > /dev/null 2>&1 && echo "no")" > /dev/null 2>&1
 fi
 if [ "$MULTIMEDIA_CONFERENCING" = "yes" ]; then
     CHECK_MULTIMEDIA_CONFERENCING="$(grep "Known video conferencing ports to" /etc/nftables.d/00-rules.nft | grep "    " > /dev/null 2>&1 && echo "yes")" > /dev/null 2>&1
@@ -848,6 +857,7 @@ if [ "$CHAIN" != "$CHECK_CHAIN" ] || \
    [ "$DSCP_GAMING" != "$CHECK_DSCP_GAMING" ] || \
    [ "$BROADCAST_VIDEO" != "$CHECK_BROADCAST_VIDEO" ] || \
    [ "$GAMING" != "$CHECK_GAMING" ] || \
+   [ "$GAME_STREAMING" != "$CHECK_GAME_STREAMING" ] || \
    [ "$MULTIMEDIA_CONFERENCING" != "$CHECK_MULTIMEDIA_CONFERENCING" ] || \
    [ "$TELEPHONY" != "$CHECK_TELEPHONY" ] || \
    [ "$TCP_SRC_GAME_PORTS" != "$CHECK_TCP_SRC_GAME_PORTS" ] || \
@@ -872,10 +882,14 @@ if [ "$CHAIN" != "$CHECK_CHAIN" ] || \
    [ "$IPV6_OTHER_STATIC_IP" != "$CHECK_IPV6_OTHER_STATIC_IP" ]; then
 
 cat << RULES > /tmp/00-rules.nft
+
+
 ### DSCP marking rules ###
+
 
 chain pre_mangle_forward {
     type filter hook forward priority mangle -1; policy accept;
+
     ## Wash all ISP DSCP marks from ingress traffic and set these rules as the default for unmarked traffic
     meta nfproto ipv4 counter ip dscp set cs1 comment "Wash all ISP DSCP marks to CS1 (IPv4)"
     meta nfproto ipv6 counter ip6 dscp set cs1 comment "Wash all ISP DSCP marks to CS1 (IPv6)"
@@ -885,18 +899,24 @@ chain pre_mangle_forward {
     meta nfproto ipv6 jump dscp_marking_ports_ipv6 comment "DSCP marking rules for ports (IPv6)"
     meta nfproto ipv4 jump dscp_marking_ip_addresses_ipv4 comment "DSCP marking rules for IP addresses (IPv4)"
     meta nfproto ipv6 jump dscp_marking_ip_addresses_ipv6 comment "DSCP marking rules for IP addresses (IPv6)"
+
 }
+
 
 chain pre_mangle_postrouting {
     type filter hook postrouting priority mangle -1; policy accept;
+
     ## Arrange ruleset
     meta nfproto ipv4 jump dscp_marking_ports_ipv4 comment "DSCP marking rules for ports (IPv4)"
     meta nfproto ipv6 jump dscp_marking_ports_ipv6 comment "DSCP marking rules for ports (IPv6)"
     meta nfproto ipv4 jump dscp_marking_ip_addresses_ipv4 comment "DSCP marking rules for IP addresses (IPv4)"
     meta nfproto ipv6 jump dscp_marking_ip_addresses_ipv6 comment "DSCP marking rules for IP addresses (IPv6)"
+
 }
 
+
 chain dscp_marking_ports_ipv4 {
+
     ## Port rules (IPv4) ##
 
     # ICMP (aka ping)
@@ -915,12 +935,10 @@ chain dscp_marking_ports_ipv4 {
     meta nfproto ipv4 udp dport 853 counter ip dscp set af41 comment "DNS over TLS to AF41 (UDP)"
 
     # HTTP/HTTPS and QUIC
-    meta nfproto ipv4 meta l4proto { tcp, udp } th sport { 80, 443 } meta length 0-575 counter ip dscp set af41 comment "Prioritize ingress light browsing (text/live chat/code?) and VoIP (these are the fallback ports) to AF41 (TCP and UDP)"
-    meta nfproto ipv4 meta l4proto { tcp, udp } th dport { 80, 443 } meta length 0-77 counter ip dscp set cs0 comment "Prioritize egress smaller packets (like ACKs, SYN) to CS0 (TCP and UDP) - Downloads in general agressively max out this class"
-    meta nfproto ipv4 meta l4proto { tcp, udp } th dport { 80, 443 } meta length 77-575 limit rate 230/second counter ip dscp set af41 comment "Prioritize egress light browsing (text/live chat/code?) and VoIP (these are the fallback ports) to AF41 (TCP and UDP)"
-    meta nfproto ipv4 meta l4proto { tcp, udp } th dport { 80, 443 } meta length 77-575 limit rate over 230/second counter ip dscp set cs0 comment "Deprioritize egress traffic of packet lengths between 77 and 575 bytes that have more than 230 pps to CS0 (TCP and UDP)"
-    meta nfproto ipv4 meta l4proto { tcp, udp } th sport { 80, 443 } meta length > 575 ct bytes 0-1536000 counter ip dscp set af31 comment "Download transfers with less than 1.5 MB to AF31 (TCP and UDP) - Web browsing and games lobby"
-    meta nfproto ipv4 meta l4proto { tcp, udp } th sport { 80, 443 } meta length > 575 ct bytes ge 1536000 counter ip dscp set cs0 comment "Download transfers with more than 1.5 MB to CS0 (TCP and UDP)"
+    meta nfproto ipv4 meta l4proto { tcp, udp } th sport { 80, 443 } counter ip dscp set cs0 comment "Ingress traffic to CS0 (TCP and UDP)"
+    meta nfproto ipv4 meta l4proto { tcp, udp } th dport { 80, 443 } meta length 0-77 counter ip dscp set cs0 comment "Egress smaller packets (like ACKs, SYN) to CS0 (TCP and UDP) - Downloads in general agressively max out this class"
+    meta nfproto ipv4 meta l4proto { tcp, udp } th dport { 80, 443 } meta length 77-1256 limit rate 200/second counter ip dscp set af41 comment "Prioritize egress light browsing (text/live chat/code?) and VoIP (these are the fallback ports) to AF41 (TCP and UDP)"
+    meta nfproto ipv4 meta l4proto { tcp, udp } th dport { 80, 443 } meta length 77-1256 limit rate over 200/second counter ip dscp set cs0 comment "Deprioritize egress traffic of packet lengths between 77 and 1256 bytes that have more than 200 pps to CS0 (TCP and UDP)"
 
     # Live Streaming ports for YouTube Live, Twitch, Vimeo and LinkedIn Live
     meta nfproto ipv4 tcp sport { 1935-1936, 2396, 2935 } counter ip dscp set cs3 comment "Live Streaming ports to CS3 (TCP)"
@@ -931,6 +949,12 @@ chain dscp_marking_ports_ipv4 {
     meta nfproto ipv4 tcp dport { 3074, 3478-3480, 3075-3076, 3659, 25565, 9339 } counter ip dscp set $DSCP_GAMING comment "Known game ports and game consoles ports to $DSCP_GAMING_COMMENT (TCP)"
     meta nfproto ipv4 udp sport { 88, 3074, 3544, 3075-3079, 3658-3659, 19132-19133, 25565, 9339 } counter ip dscp set $DSCP_GAMING comment "Known game ports and game consoles ports to $DSCP_GAMING_COMMENT (UDP)"
     meta nfproto ipv4 udp dport { 88, 3074, 3544, 3075-3079, 3658-3659, 19132-19133, 25565, 9339 } counter ip dscp set $DSCP_GAMING comment "Known game ports and game consoles ports to $DSCP_GAMING_COMMENT (UDP)"
+
+    # NVIDIA GeForce NOW and Google Stadia
+    meta nfproto ipv4 tcp sport { 44700-44899, 49006 } counter ip dscp set af42 comment "Known game streaming ports to AF42 (TCP)"
+    meta nfproto ipv4 tcp dport { 44700-44899, 49006 } counter ip dscp set af42 comment "Known game streaming ports to AF42 (TCP)"
+    meta nfproto ipv4 udp sport { 44700-44899, 49003-49006 } counter ip dscp set af42 comment "Known game streaming ports to AF42 (UDP)"
+    meta nfproto ipv4 udp dport { 44700-44899, 49003-49006 } counter ip dscp set af42 comment "Known game streaming ports to AF42 (UDP)"
 
     # Zoom, Microsoft Teams, Skype, FaceTime, GoToMeeting, Webex Meeting, Jitsi Meet, Google Meet and TeamViewer
     meta nfproto ipv4 tcp sport { 8801-8802, 5004, 5349, 5938 } counter ip dscp set af41 comment "Known video conferencing ports to AF41 (TCP)"
@@ -945,24 +969,26 @@ chain dscp_marking_ports_ipv4 {
     meta nfproto ipv4 udp dport { 5060-5061, 500, 4500 } counter ip dscp set ef comment "Known VoIP and VoWiFi ports to EF (UDP)"
 
     # Packet mark for Usenet, BitTorrent and "custom bulk ports" to be excluded
-    meta nfproto ipv4 tcp sport { 119, 563, 6881-7000, 9000, 28221, 30301, 41952, 49160, 51413, $TCP_SRC_BULK_PORTS } ip dscp cs1 counter meta mark set 75 comment "Packet mark for Usenet, BitTorrent and custom bulk ports to be excluded (TCP)"
-    meta nfproto ipv4 tcp dport { 119, 563, 6881-7000, 9000, 28221, 30301, 41952, 49160, 51413, $TCP_DST_BULK_PORTS } ip dscp cs1 counter meta mark set 75 comment "Packet mark for Usenet, BitTorrent and custom bulk ports to be excluded (TCP)"
-    meta nfproto ipv4 udp sport { 6771, 6881-7000, 28221, 30301, 41952, 49160, 51413, $UDP_SRC_BULK_PORTS } ip dscp cs1 counter meta mark set 75 comment "Packet mark for Usenet, BitTorrent and custom bulk ports to be excluded (UDP)"
-    meta nfproto ipv4 udp dport { 6771, 6881-7000, 28221, 30301, 41952, 49160, 51413, $UDP_DST_BULK_PORTS } ip dscp cs1 counter meta mark set 75 comment "Packet mark for Usenet, BitTorrent and custom bulk ports to be excluded (UDP)"
+    meta nfproto ipv4 tcp sport { 119, 563, 6881-7000, 9000, 28221, 30301, 41952, 49160, 51413, $TCP_SRC_BULK_PORTS } ip dscp cs1 counter meta mark set 40 comment "Packet mark for Usenet, BitTorrent and custom bulk ports to be excluded (TCP)"
+    meta nfproto ipv4 tcp dport { 119, 563, 6881-7000, 9000, 28221, 30301, 41952, 49160, 51413, $TCP_DST_BULK_PORTS } ip dscp cs1 counter meta mark set 41 comment "Packet mark for Usenet, BitTorrent and custom bulk ports to be excluded (TCP)"
+    meta nfproto ipv4 udp sport { 6771, 6881-7000, 28221, 30301, 41952, 49160, 51413, $UDP_SRC_BULK_PORTS } ip dscp cs1 counter meta mark set 42 comment "Packet mark for Usenet, BitTorrent and custom bulk ports to be excluded (UDP)"
+    meta nfproto ipv4 udp dport { 6771, 6881-7000, 28221, 30301, 41952, 49160, 51413, $UDP_DST_BULK_PORTS } ip dscp cs1 counter meta mark set 43 comment "Packet mark for Usenet, BitTorrent and custom bulk ports to be excluded (UDP)"
 
     # Unmarked TCP traffic
-    meta nfproto ipv4 tcp sport != { 80, 443, 8080, 1935-1936, 2396, 2935 } tcp dport != { 80, 443, 8080, 1935-1936, 2396, 2935 } meta mark != 75 meta length 0-575 ip dscp cs1 counter meta mark set 80 comment "Packet mark for unmarked TCP traffic of packet lengths between 0 and 575 bytes"
-    meta nfproto ipv4 meta l4proto tcp meta length 0-575 ct direction reply meta mark 80 counter ip dscp set af41 comment "Prioritize ingress unmarked traffic of packet lengths between 0 and 575 bytes to AF41 (TCP)"
-    meta nfproto ipv4 meta l4proto tcp meta length 0-77 ct direction original meta mark 80 counter ip dscp set cs0 comment "Prioritize egress unmarked traffic of packet lengths between 0 and 77 bytes to CS0 (TCP)"
-    meta nfproto ipv4 meta l4proto tcp meta length 77-575 limit rate 230/second ct direction original meta mark 80 counter ip dscp set af41 comment "Prioritize egress unmarked traffic of packet lengths between 77 and 575 bytes to AF41 (TCP)"
-    meta nfproto ipv4 meta l4proto tcp meta length 77-575 limit rate over 230/second ct direction original meta mark 80 counter ip dscp set cs0 comment "Deprioritize egress unmarked traffic of packet lengths between 77 and 575 bytes that have more than 230 pps to CS0 (TCP)"
+    meta nfproto ipv4 tcp sport != { 80, 443, 8080, 1935-1936, 2396, 2935 } tcp dport != { 80, 443, 8080, 1935-1936, 2396, 2935 } meta mark != { 40, 41 } meta length 0-1256 limit rate over 200/second burst 100 packets ip dscp cs1 counter meta mark set 45 comment "Packet mark for unmarked TCP traffic of packet lengths between 0 and 1256 bytes that have more than 200 pps"
+    meta nfproto ipv4 meta l4proto tcp numgen random mod 1000 < 5 meta mark 45 counter meta mark set 0 comment "0.5% probability of unmark a packet that go over 200 pps to be prioritized to $DSCP_GAMING_COMMENT (TCP)"
+    meta nfproto ipv4 meta l4proto tcp meta length 0-77 ct direction reply meta mark 45 counter ip dscp set af41 comment "Prioritize ingress unmarked traffic of packet lengths between 0 and 77 bytes that have more than 200 pps to AF41 (TCP)"
+    meta nfproto ipv4 meta l4proto tcp meta length 0-77 ct direction original meta mark 45 counter ip dscp set cs0 comment "Prioritize egress unmarked traffic of packet lengths between 0 and 77 bytes that have more than 200 pps to CS0 (TCP)"
+    meta nfproto ipv4 meta l4proto tcp meta length > 77 meta mark 45 counter ip dscp set af41 comment "Prioritize unmarked traffic of packet lengths between 77 and 1256 bytes that have more than 200 pps to AF41 (TCP)"
+    meta nfproto ipv4 tcp sport != { 80, 443, 8080, 1935-1936, 2396, 2935 } tcp dport != { 80, 443, 8080, 1935-1936, 2396, 2935 } meta mark != { 40, 41, 45 } meta length 0-1256 ip dscp cs1 counter ip dscp set $DSCP_GAMING comment "Prioritize unmarked traffic of packet lengths between 0 and 1256 bytes that have less than 200 pps to $DSCP_GAMING_COMMENT (TCP)"
 
     # Unmarked UDP traffic (Some games also tend to use really tiny packets on upload side (same range as ACKs))
-    meta nfproto ipv4 udp sport != { 80, 443 } udp dport != { 80, 443 } meta mark != 75 meta length 0-1256 limit rate over 230/second burst 100 packets ip dscp cs1 counter meta mark set 85 comment "Packet mark for unmarked UDP traffic of packet lengths between 0 and 1256 bytes that have more than 230 pps"
-    meta nfproto ipv4 meta l4proto udp numgen random mod 1000 < 5 meta mark 85 counter meta mark set 0 comment "0.5% probability of unmark a packet that go over 230 pps to be prioritized to $DSCP_GAMING_COMMENT (UDP)"
-    meta nfproto ipv4 meta l4proto udp meta length 0-77 ct direction reply meta mark 85 counter ip dscp set af41 comment "Prioritize ingress unmarked traffic of packet lengths between 0 and 77 bytes that have more than 230 pps to AF41 (UDP)"
-    meta nfproto ipv4 meta l4proto udp meta length 0-77 ct direction original meta mark 85 counter ip dscp set cs0 comment "Prioritize egress unmarked traffic of packet lengths between 0 and 77 bytes that have more than 230 pps to CS0 (UDP)"
-    meta nfproto ipv4 udp sport != { 80, 443 } udp dport != { 80, 443 } meta mark != { 75, 85 } meta length 0-1256 ip dscp cs1 counter ip dscp set $DSCP_GAMING comment "Prioritize unmarked traffic of packet lengths between 0 and 1256 bytes that have less than 230 pps to $DSCP_GAMING_COMMENT (UDP) - Gaming & VoIP"
+    meta nfproto ipv4 udp sport != { 80, 443 } udp dport != { 80, 443 } meta mark != { 42, 43 } meta length 0-1256 limit rate over 250/second burst 100 packets ip dscp cs1 counter meta mark set 50 comment "Packet mark for unmarked UDP traffic of packet lengths between 0 and 1256 bytes that have more than 250 pps"
+    meta nfproto ipv4 meta l4proto udp numgen random mod 1000 < 5 meta mark 50 counter meta mark set 0 comment "0.5% probability of unmark a packet that go over 250 pps to be prioritized to $DSCP_GAMING_COMMENT (UDP)"
+    meta nfproto ipv4 meta l4proto udp meta length 0-77 ct direction reply meta mark 50 counter ip dscp set af41 comment "Prioritize ingress unmarked traffic of packet lengths between 0 and 77 bytes that have more than 250 pps to AF41 (UDP)"
+    meta nfproto ipv4 meta l4proto udp meta length 0-77 ct direction original meta mark 50 counter ip dscp set cs0 comment "Prioritize egress unmarked traffic of packet lengths between 0 and 77 bytes that have more than 250 pps to CS0 (UDP)"
+    meta nfproto ipv4 meta l4proto udp meta length > 77 meta mark 50 counter ip dscp set af41 comment "Prioritize unmarked traffic of packet lengths between 77 and 1256 bytes that have more than 250 pps to AF41 (UDP)"
+    meta nfproto ipv4 udp sport != { 80, 443 } udp dport != { 80, 443 } meta mark != { 42, 43, 50 } meta length 0-1256 ip dscp cs1 counter ip dscp set $DSCP_GAMING comment "Prioritize unmarked traffic of packet lengths between 0 and 1256 bytes that have less than 250 pps to $DSCP_GAMING_COMMENT (UDP) - Gaming & VoIP"
 
     ## Custom port rules (IPv4) ##
 
@@ -983,9 +1009,12 @@ chain dscp_marking_ports_ipv4 {
     meta nfproto ipv4 tcp dport { $TCP_DST_OTHER_PORTS } counter ip dscp set $DSCP_OTHER_PORTS comment "Other ports to $DSCP_OTHER_PORTS_COMMENT (TCP)"
     meta nfproto ipv4 udp sport { $UDP_SRC_OTHER_PORTS } counter ip dscp set $DSCP_OTHER_PORTS comment "Other ports to $DSCP_OTHER_PORTS_COMMENT (UDP)"
     meta nfproto ipv4 udp dport { $UDP_DST_OTHER_PORTS } counter ip dscp set $DSCP_OTHER_PORTS comment "Other ports to $DSCP_OTHER_PORTS_COMMENT (UDP)"
+
 }
 
+
 chain dscp_marking_ports_ipv6 {
+
     ## Port rules (IPv6) ##
 
     # ICMPv6 (aka ping)
@@ -1004,12 +1033,10 @@ chain dscp_marking_ports_ipv6 {
     meta nfproto ipv6 udp dport 853 counter ip6 dscp set af41 comment "DNS over TLS to AF41 (UDP)"
 
     # HTTP/HTTPS and QUIC
-    meta nfproto ipv6 meta l4proto { tcp, udp } th sport { 80, 443 } meta length 0-575 counter ip6 dscp set af41 comment "Prioritize ingress light browsing (text/live chat/code?) and VoIP (these are the fallback ports) to AF41 (TCP and UDP)"
-    meta nfproto ipv6 meta l4proto { tcp, udp } th dport { 80, 443 } meta length 0-77 counter ip6 dscp set cs0 comment "Prioritize egress smaller packets (like ACKs, SYN) to CS0 (TCP and UDP) - Downloads in general agressively max out this class"
-    meta nfproto ipv6 meta l4proto { tcp, udp } th dport { 80, 443 } meta length 77-575 limit rate 230/second counter ip6 dscp set af41 comment "Prioritize egress light browsing (text/live chat/code?) and VoIP (these are the fallback ports) to AF41 (TCP and UDP)"
-    meta nfproto ipv6 meta l4proto { tcp, udp } th dport { 80, 443 } meta length 77-575 limit rate over 230/second counter ip6 dscp set cs0 comment "Deprioritize egress traffic of packet lengths between 77 and 575 bytes that have more than 230 pps to CS0 (TCP and UDP)"
-    meta nfproto ipv6 meta l4proto { tcp, udp } th sport { 80, 443 } meta length > 575 ct bytes 0-1536000 counter ip6 dscp set af31 comment "Download transfers with less than 1.5 MB to AF31 (TCP and UDP) - Web browsing and games lobby"
-    meta nfproto ipv6 meta l4proto { tcp, udp } th sport { 80, 443 } meta length > 575 ct bytes ge 1536000 counter ip6 dscp set cs0 comment "Download transfers with more than 1.5 MB to CS0 (TCP and UDP)"
+    meta nfproto ipv6 meta l4proto { tcp, udp } th sport { 80, 443 } counter ip6 dscp set cs0 comment "Ingress traffic to CS0 (TCP and UDP)"
+    meta nfproto ipv6 meta l4proto { tcp, udp } th dport { 80, 443 } meta length 0-77 counter ip6 dscp set cs0 comment "Egress smaller packets (like ACKs, SYN) to CS0 (TCP and UDP) - Downloads in general agressively max out this class"
+    meta nfproto ipv6 meta l4proto { tcp, udp } th dport { 80, 443 } meta length 77-1256 limit rate 200/second counter ip6 dscp set af41 comment "Prioritize egress light browsing (text/live chat/code?) and VoIP (these are the fallback ports) to AF41 (TCP and UDP)"
+    meta nfproto ipv6 meta l4proto { tcp, udp } th dport { 80, 443 } meta length 77-1256 limit rate over 200/second counter ip6 dscp set cs0 comment "Deprioritize egress traffic of packet lengths between 77 and 1256 bytes that have more than 200 pps to CS0 (TCP and UDP)"
 
     # Live Streaming ports for YouTube Live, Twitch, Vimeo and LinkedIn Live
     meta nfproto ipv6 tcp sport { 1935-1936, 2396, 2935 } counter ip6 dscp set cs3 comment "Live Streaming ports to CS3 (TCP)"
@@ -1020,6 +1047,12 @@ chain dscp_marking_ports_ipv6 {
     meta nfproto ipv6 tcp dport { 3074, 3478-3480, 3075-3076, 3659, 25565, 9339 } counter ip6 dscp set $DSCP_GAMING comment "Known game ports and game consoles ports to $DSCP_GAMING_COMMENT (TCP)"
     meta nfproto ipv6 udp sport { 88, 3074, 3544, 3075-3079, 3658-3659, 19132-19133, 25565, 9339 } counter ip6 dscp set $DSCP_GAMING comment "Known game ports and game consoles ports to $DSCP_GAMING_COMMENT (UDP)"
     meta nfproto ipv6 udp dport { 88, 3074, 3544, 3075-3079, 3658-3659, 19132-19133, 25565, 9339 } counter ip6 dscp set $DSCP_GAMING comment "Known game ports and game consoles ports to $DSCP_GAMING_COMMENT (UDP)"
+
+    # NVIDIA GeForce NOW and Google Stadia
+    meta nfproto ipv6 tcp sport { 44700-44899, 49006 } counter ip6 dscp set af42 comment "Known game streaming ports to AF42 (TCP)"
+    meta nfproto ipv6 tcp dport { 44700-44899, 49006 } counter ip6 dscp set af42 comment "Known game streaming ports to AF42 (TCP)"
+    meta nfproto ipv6 udp sport { 44700-44899, 49003-49006 } counter ip6 dscp set af42 comment "Known game streaming ports to AF42 (UDP)"
+    meta nfproto ipv6 udp dport { 44700-44899, 49003-49006 } counter ip6 dscp set af42 comment "Known game streaming ports to AF42 (UDP)"
 
     # Zoom, Microsoft Teams, Skype, FaceTime, GoToMeeting, Webex Meeting, Jitsi Meet, Google Meet and TeamViewer
     meta nfproto ipv6 tcp sport { 8801-8802, 5004, 5349, 5938 } counter ip6 dscp set af41 comment "Known video conferencing ports to AF41 (TCP)"
@@ -1034,24 +1067,26 @@ chain dscp_marking_ports_ipv6 {
     meta nfproto ipv6 udp dport { 5060-5061, 500, 4500 } counter ip6 dscp set ef comment "Known VoIP and VoWiFi ports to EF (UDP)"
 
     # Packet mark for Usenet, BitTorrent and "custom bulk ports" to be excluded
-    meta nfproto ipv6 tcp sport { 119, 563, 6881-7000, 9000, 28221, 30301, 41952, 49160, 51413, $TCP_SRC_BULK_PORTS } ip6 dscp cs1 counter meta mark set 75 comment "Packet mark for Usenet, BitTorrent and custom bulk ports to be excluded (TCP)"
-    meta nfproto ipv6 tcp dport { 119, 563, 6881-7000, 9000, 28221, 30301, 41952, 49160, 51413, $TCP_DST_BULK_PORTS } ip6 dscp cs1 counter meta mark set 75 comment "Packet mark for Usenet, BitTorrent and custom bulk ports to be excluded (TCP)"
-    meta nfproto ipv6 udp sport { 6771, 6881-7000, 28221, 30301, 41952, 49160, 51413, $UDP_SRC_BULK_PORTS } ip6 dscp cs1 counter meta mark set 75 comment "Packet mark for Usenet, BitTorrent and custom bulk ports to be excluded (UDP)"
-    meta nfproto ipv6 udp dport { 6771, 6881-7000, 28221, 30301, 41952, 49160, 51413, $UDP_DST_BULK_PORTS } ip6 dscp cs1 counter meta mark set 75 comment "Packet mark for Usenet, BitTorrent and custom bulk ports to be excluded (UDP)"
+    meta nfproto ipv6 tcp sport { 119, 563, 6881-7000, 9000, 28221, 30301, 41952, 49160, 51413, $TCP_SRC_BULK_PORTS } ip6 dscp cs1 counter meta mark set 70 comment "Packet mark for Usenet, BitTorrent and custom bulk ports to be excluded (TCP)"
+    meta nfproto ipv6 tcp dport { 119, 563, 6881-7000, 9000, 28221, 30301, 41952, 49160, 51413, $TCP_DST_BULK_PORTS } ip6 dscp cs1 counter meta mark set 71 comment "Packet mark for Usenet, BitTorrent and custom bulk ports to be excluded (TCP)"
+    meta nfproto ipv6 udp sport { 6771, 6881-7000, 28221, 30301, 41952, 49160, 51413, $UDP_SRC_BULK_PORTS } ip6 dscp cs1 counter meta mark set 72 comment "Packet mark for Usenet, BitTorrent and custom bulk ports to be excluded (UDP)"
+    meta nfproto ipv6 udp dport { 6771, 6881-7000, 28221, 30301, 41952, 49160, 51413, $UDP_DST_BULK_PORTS } ip6 dscp cs1 counter meta mark set 73 comment "Packet mark for Usenet, BitTorrent and custom bulk ports to be excluded (UDP)"
 
     # Unmarked TCP traffic
-    meta nfproto ipv6 tcp sport != { 80, 443, 8080, 1935-1936, 2396, 2935 } tcp dport != { 80, 443, 8080, 1935-1936, 2396, 2935 } meta mark != 75 meta length 0-575 ip6 dscp cs1 counter meta mark set 80 comment "Packet mark for unmarked TCP traffic of packet lengths between 0 and 575 bytes"
-    meta nfproto ipv6 meta l4proto tcp meta length 0-575 ct direction reply meta mark 80 counter ip6 dscp set af41 comment "Prioritize ingress unmarked traffic of packet lengths between 0 and 575 bytes to AF41 (TCP)"
-    meta nfproto ipv6 meta l4proto tcp meta length 0-77 ct direction original meta mark 80 counter ip6 dscp set cs0 comment "Prioritize egress unmarked traffic of packet lengths between 0 and 77 bytes to CS0 (TCP)"
-    meta nfproto ipv6 meta l4proto tcp meta length 77-575 limit rate 230/second ct direction original meta mark 80 counter ip6 dscp set af41 comment "Prioritize egress unmarked traffic of packet lengths between 77 and 575 bytes to AF41 (TCP)"
-    meta nfproto ipv6 meta l4proto tcp meta length 77-575 limit rate over 230/second ct direction original meta mark 80 counter ip6 dscp set cs0 comment "Deprioritize egress unmarked traffic of packet lengths between 77 and 575 bytes that have more than 230 pps to CS0 (TCP)"
+    meta nfproto ipv6 tcp sport != { 80, 443, 8080, 1935-1936, 2396, 2935 } tcp dport != { 80, 443, 8080, 1935-1936, 2396, 2935 } meta mark != { 70, 71 } meta length 0-1256 limit rate over 200/second burst 100 packets ip6 dscp cs1 counter meta mark set 75 comment "Packet mark for unmarked TCP traffic of packet lengths between 0 and 1256 bytes that have more than 200 pps"
+    meta nfproto ipv6 meta l4proto tcp numgen random mod 1000 < 5 meta mark 75 counter meta mark set 0 comment "0.5% probability of unmark a packet that go over 200 pps to be prioritized to $DSCP_GAMING_COMMENT (TCP)"
+    meta nfproto ipv6 meta l4proto tcp meta length 0-77 ct direction reply meta mark 75 counter ip6 dscp set af41 comment "Prioritize ingress unmarked traffic of packet lengths between 0 and 77 bytes that have more than 200 pps to AF41 (TCP)"
+    meta nfproto ipv6 meta l4proto tcp meta length 0-77 ct direction original meta mark 75 counter ip6 dscp set cs0 comment "Prioritize egress unmarked traffic of packet lengths between 0 and 77 bytes that have more than 200 pps to CS0 (TCP)"
+    meta nfproto ipv6 meta l4proto tcp meta length > 77 meta mark 75 counter ip6 dscp set af41 comment "Prioritize unmarked traffic of packet lengths between 77 and 1256 bytes that have more than 200 pps to AF41 (TCP)"
+    meta nfproto ipv6 tcp sport != { 80, 443, 8080, 1935-1936, 2396, 2935 } tcp dport != { 80, 443, 8080, 1935-1936, 2396, 2935 } meta mark != { 70, 71, 75 } meta length 0-1256 ip6 dscp cs1 counter ip6 dscp set $DSCP_GAMING comment "Prioritize unmarked traffic of packet lengths between 0 and 1256 bytes that have less than 200 pps to $DSCP_GAMING_COMMENT (TCP)"
 
     # Unmarked UDP traffic (Some games also tend to use really tiny packets on upload side (same range as ACKs))
-    meta nfproto ipv6 udp sport != { 80, 443 } udp dport != { 80, 443 } meta mark != 75 meta length 0-1256 limit rate over 230/second burst 100 packets ip6 dscp cs1 counter meta mark set 85 comment "Packet mark for unmarked UDP traffic of packet lengths between 0 and 1256 bytes that have more than 230 pps"
-    meta nfproto ipv6 meta l4proto udp numgen random mod 1000 < 5 meta mark 85 counter meta mark set 0 comment "0.5% probability of unmark a packet that go over 230 pps to be prioritized to $DSCP_GAMING_COMMENT (UDP)"
-    meta nfproto ipv6 meta l4proto udp meta length 0-77 ct direction reply meta mark 85 counter ip6 dscp set af41 comment "Prioritize ingress unmarked traffic of packet lengths between 0 and 77 bytes that have more than 230 pps to AF41 (UDP)"
-    meta nfproto ipv6 meta l4proto udp meta length 0-77 ct direction original meta mark 85 counter ip6 dscp set cs0 comment "Prioritize egress unmarked traffic of packet lengths between 0 and 77 bytes that have more than 230 pps to CS0 (UDP)"
-    meta nfproto ipv6 udp sport != { 80, 443 } udp dport != { 80, 443 } meta mark != { 75, 85 } meta length 0-1256 ip6 dscp cs1 counter ip6 dscp set $DSCP_GAMING comment "Prioritize unmarked traffic of packet lengths between 0 and 1256 bytes that have less than 230 pps to $DSCP_GAMING_COMMENT (UDP) - Gaming & VoIP"
+    meta nfproto ipv6 udp sport != { 80, 443 } udp dport != { 80, 443 } meta mark != { 72, 73 } meta length 0-1256 limit rate over 250/second burst 100 packets ip6 dscp cs1 counter meta mark set 80 comment "Packet mark for unmarked UDP traffic of packet lengths between 0 and 1256 bytes that have more than 250 pps"
+    meta nfproto ipv6 meta l4proto udp numgen random mod 1000 < 5 meta mark 80 counter meta mark set 0 comment "0.5% probability of unmark a packet that go over 250 pps to be prioritized to $DSCP_GAMING_COMMENT (UDP)"
+    meta nfproto ipv6 meta l4proto udp meta length 0-77 ct direction reply meta mark 80 counter ip6 dscp set af41 comment "Prioritize ingress unmarked traffic of packet lengths between 0 and 77 bytes that have more than 250 pps to AF41 (UDP)"
+    meta nfproto ipv6 meta l4proto udp meta length 0-77 ct direction original meta mark 80 counter ip6 dscp set cs0 comment "Prioritize egress unmarked traffic of packet lengths between 0 and 77 bytes that have more than 250 pps to CS0 (UDP)"
+    meta nfproto ipv6 meta l4proto udp meta length > 77 meta mark 80 counter ip6 dscp set af41 comment "Prioritize unmarked traffic of packet lengths between 77 and 1256 bytes that have more than 250 pps to AF41 (UDP)"
+    meta nfproto ipv6 udp sport != { 80, 443 } udp dport != { 80, 443 } meta mark != { 72, 73, 80 } meta length 0-1256 ip6 dscp cs1 counter ip6 dscp set $DSCP_GAMING comment "Prioritize unmarked traffic of packet lengths between 0 and 1256 bytes that have less than 250 pps to $DSCP_GAMING_COMMENT (UDP) - Gaming & VoIP"
 
     ## Custom port rules (IPv6) ##
 
@@ -1072,14 +1107,17 @@ chain dscp_marking_ports_ipv6 {
     meta nfproto ipv6 tcp dport { $TCP_DST_OTHER_PORTS } counter ip6 dscp set $DSCP_OTHER_PORTS comment "Other ports to $DSCP_OTHER_PORTS_COMMENT (TCP)"
     meta nfproto ipv6 udp sport { $UDP_SRC_OTHER_PORTS } counter ip6 dscp set $DSCP_OTHER_PORTS comment "Other ports to $DSCP_OTHER_PORTS_COMMENT (UDP)"
     meta nfproto ipv6 udp dport { $UDP_DST_OTHER_PORTS } counter ip6 dscp set $DSCP_OTHER_PORTS comment "Other ports to $DSCP_OTHER_PORTS_COMMENT (UDP)"
+
 }
 
+
 chain dscp_marking_ip_addresses_ipv4 {
+
     ## IP address rules (IPv4) ##
 
     # Game consoles (Static IP) - Will cover all ports (except ports 80, 443, 8080, Live Streaming and BitTorrent)
-    ip daddr { $IPV4_GAME_CONSOLES_STATIC_IP } meta l4proto { tcp, udp } th sport != { 80, 443, 8080, 1935-1936, 2396, 2935 } th dport != { 80, 443, 8080, 1935-1936, 2396, 2935 } meta mark != 75 counter ip dscp set $DSCP_GAMING comment "Game consoles to $DSCP_GAMING_COMMENT (TCP and UDP)"
-    ip saddr { $IPV4_GAME_CONSOLES_STATIC_IP } meta l4proto { tcp, udp } th sport != { 80, 443, 8080, 1935-1936, 2396, 2935 } th dport != { 80, 443, 8080, 1935-1936, 2396, 2935 } meta mark != 75 counter ip dscp set $DSCP_GAMING comment "Game consoles to $DSCP_GAMING_COMMENT (TCP and UDP)"
+    ip daddr { $IPV4_GAME_CONSOLES_STATIC_IP } meta l4proto { tcp, udp } th sport != { 80, 443, 8080, 1935-1936, 2396, 2935 } th dport != { 80, 443, 8080, 1935-1936, 2396, 2935 } meta mark != { 40, 41, 42, 43 } counter ip dscp set $DSCP_GAMING comment "Game consoles to $DSCP_GAMING_COMMENT (TCP and UDP)"
+    ip saddr { $IPV4_GAME_CONSOLES_STATIC_IP } meta l4proto { tcp, udp } th sport != { 80, 443, 8080, 1935-1936, 2396, 2935 } th dport != { 80, 443, 8080, 1935-1936, 2396, 2935 } meta mark != { 40, 41, 42, 43 } counter ip dscp set $DSCP_GAMING comment "Game consoles to $DSCP_GAMING_COMMENT (TCP and UDP)"
 
     # TorrentBox (Static IP) - Mark 'all traffic' as bulk
     ip daddr { $IPV4_TORRENTBOX_STATIC_IP } counter ip dscp set cs1 comment "TorrentBox to CS1"
@@ -1088,14 +1126,17 @@ chain dscp_marking_ip_addresses_ipv4 {
     # Other static IP addresses [OPTIONAL] - Mark 'all traffic' wherever you want
     ip daddr { $IPV4_OTHER_STATIC_IP } counter ip dscp set $DSCP_OTHER_STATIC_IP comment "Other static IP addresses to $DSCP_OTHER_STATIC_IP_COMMENT"
     ip saddr { $IPV4_OTHER_STATIC_IP } counter ip dscp set $DSCP_OTHER_STATIC_IP comment "Other static IP addresses to $DSCP_OTHER_STATIC_IP_COMMENT"
+
 }
 
-    chain dscp_marking_ip_addresses_ipv6 {
+
+chain dscp_marking_ip_addresses_ipv6 {
+
     ## IP address rules (IPv6) ##
 
     # Game consoles (Static IP) - Will cover all ports (except ports 80, 443, 8080, Live Streaming and BitTorrent)
-    ip6 daddr { $IPV6_GAME_CONSOLES_STATIC_IP } meta l4proto { tcp, udp } th sport != { 80, 443, 8080, 1935-1936, 2396, 2935 } th dport != { 80, 443, 8080, 1935-1936, 2396, 2935 } meta mark != 75 counter ip6 dscp set $DSCP_GAMING comment "Game consoles to $DSCP_GAMING_COMMENT (TCP and UDP)"
-    ip6 saddr { $IPV6_GAME_CONSOLES_STATIC_IP } meta l4proto { tcp, udp } th sport != { 80, 443, 8080, 1935-1936, 2396, 2935 } th dport != { 80, 443, 8080, 1935-1936, 2396, 2935 } meta mark != 75 counter ip6 dscp set $DSCP_GAMING comment "Game consoles to $DSCP_GAMING_COMMENT (TCP and UDP)"
+    ip6 daddr { $IPV6_GAME_CONSOLES_STATIC_IP } meta l4proto { tcp, udp } th sport != { 80, 443, 8080, 1935-1936, 2396, 2935 } th dport != { 80, 443, 8080, 1935-1936, 2396, 2935 } meta mark != { 70, 71, 72, 73 } counter ip6 dscp set $DSCP_GAMING comment "Game consoles to $DSCP_GAMING_COMMENT (TCP and UDP)"
+    ip6 saddr { $IPV6_GAME_CONSOLES_STATIC_IP } meta l4proto { tcp, udp } th sport != { 80, 443, 8080, 1935-1936, 2396, 2935 } th dport != { 80, 443, 8080, 1935-1936, 2396, 2935 } meta mark != { 70, 71, 72, 73 } counter ip6 dscp set $DSCP_GAMING comment "Game consoles to $DSCP_GAMING_COMMENT (TCP and UDP)"
 
     # TorrentBox (Static IP) - Mark 'all traffic' as bulk
     ip6 daddr { $IPV6_TORRENTBOX_STATIC_IP } counter ip6 dscp set cs1 comment "TorrentBox to CS1"
@@ -1104,6 +1145,7 @@ chain dscp_marking_ip_addresses_ipv4 {
     # Other static IP addresses [OPTIONAL] - Mark 'all traffic' wherever you want
     ip6 daddr { $IPV6_OTHER_STATIC_IP } counter ip6 dscp set $DSCP_OTHER_STATIC_IP comment "Other static IP addresses to $DSCP_OTHER_STATIC_IP_COMMENT"
     ip6 saddr { $IPV6_OTHER_STATIC_IP } counter ip6 dscp set $DSCP_OTHER_STATIC_IP comment "Other static IP addresses to $DSCP_OTHER_STATIC_IP_COMMENT"
+
 }
 RULES
 
@@ -1112,12 +1154,12 @@ RULES
     ## Default chain for the rules
     if [ "$CHAIN" = "FORWARD" ]; then
         # FORWARD
-        grep "jump" /tmp/00-rules.nft | sed '1q;d' | grep "    " > /dev/null 2>&1 || sed -i "10,13 s/#/ /" /tmp/00-rules.nft > /dev/null 2>&1
-        grep "jump" /tmp/00-rules.nft | sed '5q;d' | grep "#   " > /dev/null 2>&1 || sed -i "16 s/c/#c/; 17,22 s/ /#/; 23 s/}/#}/" /tmp/00-rules.nft > /dev/null 2>&1
+        grep "jump" /tmp/00-rules.nft | sed '1q;d' | grep "    " > /dev/null 2>&1 || sed -i "14,17 s/#/ /" /tmp/00-rules.nft > /dev/null 2>&1
+        grep "jump" /tmp/00-rules.nft | sed '5q;d' | grep "#   " > /dev/null 2>&1 || sed -i "22 s/c/#c/; 23,29 s/ /#/; 31 s/}/#}/" /tmp/00-rules.nft > /dev/null 2>&1
     elif [ "$CHAIN" != "FORWARD" ]; then
         # POSTROUTING
-        grep "jump" /tmp/00-rules.nft | sed '1q;d' | grep "#   " > /dev/null 2>&1 || sed -i "10,13 s/ /#/" /tmp/00-rules.nft > /dev/null 2>&1
-        grep "jump" /tmp/00-rules.nft | sed '5q;d' | grep "    " > /dev/null 2>&1 || sed -i "16 s/#c/c/; 17,22 s/#/ /; 23 s/#}/}/" /tmp/00-rules.nft > /dev/null 2>&1
+        grep "jump" /tmp/00-rules.nft | sed '1q;d' | grep "#   " > /dev/null 2>&1 || sed -i "14,17 s/ /#/" /tmp/00-rules.nft > /dev/null 2>&1
+        grep "jump" /tmp/00-rules.nft | sed '5q;d' | grep "    " > /dev/null 2>&1 || sed -i "22 s/#c/c/; 23,29 s/#/ /; 31 s/#}/}/" /tmp/00-rules.nft > /dev/null 2>&1
     fi
 
     ############################################################
@@ -1140,6 +1182,15 @@ RULES
     elif [ "$GAMING" != "yes" ]; then
         # Disable
         grep "Known game ports" /tmp/00-rules.nft | grep "#   " > /dev/null 2>&1 || sed -i '/Known game ports/s/    /#   /g' /tmp/00-rules.nft > /dev/null 2>&1
+    fi
+
+    ## GAME STREAMING rules
+    if [ "$GAME_STREAMING" = "yes" ]; then
+        # Enable
+        grep "Known game streaming" /tmp/00-rules.nft | grep "    " > /dev/null 2>&1 || sed -i '/Known game streaming/s/#   /    /g' /tmp/00-rules.nft > /dev/null 2>&1
+    elif [ "$GAME_STREAMING" != "yes" ]; then
+        # Disable
+        grep "Known game streaming" /tmp/00-rules.nft | grep "#   " > /dev/null 2>&1 || sed -i '/Known game streaming/s/    /#   /g' /tmp/00-rules.nft > /dev/null 2>&1
     fi
 
     ## MULTIMEDIA CONFERENCING rules
