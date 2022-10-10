@@ -233,7 +233,7 @@ IPV6_TORRENTBOX_STATIC_IP="IPv6::10"
 
 
 ## Other static IP addresses [OPTIONAL]
-DSCP_OTHER_STATIC_IP="LE"  # Change this DSCP value to whatever you want.
+DSCP_OTHER_STATIC_IP="AF22"  # Change this DSCP value to whatever you want.
 
 IPV4_OTHER_STATIC_IP="192.168.1.106-192.168.1.240"
 IPV6_OTHER_STATIC_IP=""
