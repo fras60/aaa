@@ -26,8 +26,8 @@ AUTORATE_INGRESS="no"  # Write: "yes" | "no"
                        # If you don't have "cellular link", you should never use this option.
 
 ## Make sure you set these parameters correctly for your connection type or don't write any value and use a presets or keywords below.
-OVERHEAD="58"           # Write values between "-64" and "256"
-MPU="124"                # Write values between "0" and "256"
+OVERHEAD="48"           # Write values between "-64" and "256"
+MPU="86"                # Write values between "0" and "256"
 LINK_COMPENSATION="atm"  # Write: "atm" | "ptm" | "noatm"
                       # These values overwrite the presets or keyboards below.
                       # Read: https://openwrt.org/docs/guide-user/network/traffic-shaping/sqm#configuring_the_sqm_bufferbloat_packages
@@ -136,7 +136,7 @@ CHAIN="FORWARD"  # Write: "FORWARD" | "POSTROUTING"
 
 
 ## DSCP values for the rules
-DSCP_ICMP="EF"    # Change the DSCP value for ICMP (aka ping) to whatever you want.
+DSCP_ICMP="AF22"    # Change the DSCP value for ICMP (aka ping) to whatever you want.
 DSCP_GAMING="CS4"  # You can test changing the DSCP value for games from "CS4" to "EF" or whatever you want.
 DSCP_MULTIMEDIA_CONFERENCING="AF41"
 DSCP_BROADCAST_VIDEO="CS3"
@@ -233,7 +233,7 @@ IPV6_TORRENTBOX_STATIC_IP="IPv6::10"
 
 
 ## Other static IP addresses [OPTIONAL]
-DSCP_OTHER_STATIC_IP="VA"  # Change this DSCP value to whatever you want.
+DSCP_OTHER_STATIC_IP="AF13"  # Change this DSCP value to whatever you want.
 
 IPV4_OTHER_STATIC_IP="192.168.1.106-192.168.1.240"
 IPV6_OTHER_STATIC_IP=""
