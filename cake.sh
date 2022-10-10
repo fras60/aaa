@@ -64,8 +64,8 @@ ETHER_VLAN_KEYWORD="2"  # Write values between "1" and "3" or don't write any va
                        # This keyword "ether-vlan" may be repeated as necessary in 'EXTRA PARAMETERS'.
                        # Read: https://man7.org/linux/man-pages/man8/tc-cake.8.html#OVERHEAD_COMPENSATION_PARAMETERS
 
-PRIORITY_QUEUE_INGRESS="diffserv8"  # Write: "besteffort" | "diffserv3" | "diffserv4" | "diffserv8"
-PRIORITY_QUEUE_EGRESS="diffserv8"   # Write: "besteffort" | "diffserv3" | "diffserv4" | "diffserv8"
+PRIORITY_QUEUE_INGRESS="diffserv4"  # Write: "besteffort" | "diffserv3" | "diffserv4" | "diffserv8"
+PRIORITY_QUEUE_EGRESS="diffserv4"   # Write: "besteffort" | "diffserv3" | "diffserv4" | "diffserv8"
                                     # CAKE can divide traffic into tins based on the Diffserv field.
                                     # "besteffort" only has 'one tin' or priority tier.
                                     # "diffserv3" has '3 tins' or different priority tiers.
@@ -185,7 +185,7 @@ UDP_DST_BULK_PORTS="6881-6887, 51413"
 
 
 ## Other ports [OPTIONAL]
-DSCP_OTHER_PORTS="EF"  # Change this DSCP value to whatever you want.
+DSCP_OTHER_PORTS="CS4"  # Change this DSCP value to whatever you want.
 
 TCP_SRC_OTHER_PORTS="53,5353,1-65535"
 TCP_DST_OTHER_PORTS="53,5353"
@@ -233,7 +233,7 @@ IPV6_TORRENTBOX_STATIC_IP="IPv6::10"
 
 
 ## Other static IP addresses [OPTIONAL]
-DSCP_OTHER_STATIC_IP="AF13"  # Change this DSCP value to whatever you want.
+DSCP_OTHER_STATIC_IP="AF21"  # Change this DSCP value to whatever you want.
 
 IPV4_OTHER_STATIC_IP="192.168.1.106-192.168.1.240"
 IPV6_OTHER_STATIC_IP=""
