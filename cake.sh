@@ -27,7 +27,7 @@ AUTORATE_INGRESS="no"  # Write: "yes" | "no"
 
 ## Make sure you set these parameters correctly for your connection type or don't write any value and use a presets or keywords below.
 OVERHEAD="58"           # Write values between "-64" and "256"
-MPU="124"                # Write values between "0" and "256"
+MPU="0"                # Write values between "0" and "256"
 LINK_COMPENSATION="atm"  # Write: "atm" | "ptm" | "noatm"
                       # These values overwrite the presets or keyboards below.
                       # Read: https://openwrt.org/docs/guide-user/network/traffic-shaping/sqm#configuring_the_sqm_bufferbloat_packages
@@ -90,7 +90,7 @@ WASH_EGRESS="yes"  # Write: "yes" | "no"
                    # Wash outgoing (egress) DSCP marking to ISP, because may be mis-marked from ISP perspective.
                    ## Recommendation: Don't use "wash" on ingress so that the "Wi-Fi Multimedia (WMM) QoS" can make use of the custom DSCP marking and just use "wash" on egress.
 
-INGRESS_MODE="no"  # Write: "yes" | "no"
+INGRESS_MODE="yes"  # Write: "yes" | "no"
                     # Enabling "ingress mode" ('ingress' parameter) will tune the AQM to always keep at least two packets queued *for each flow*.
                     # Basically will drop and/or delay packets in a way that the rate of packets leaving the shaper is smaller or equal to the configured shaper-rate.
                     # This leads to slightly more aggressive dropping, but this also ameliorates one issue we have with post-bottleneck shaping,
@@ -106,7 +106,7 @@ ACK_FILTER_EGRESS="auto"  # Write: "yes" | "no" | "auto"
                           # Don't recommend turning it on more symmetrical link bandwidths the effect is negligible at best.
 
 ## Don't write 'ms', just write the number.
-RTT="190"  # Write values between "1" and "1000" or don't write any value to use the default value (100).
+RTT="150"  # Write values between "1" and "1000" or don't write any value to use the default value (100).
         # This parameter defines the time window that your shaper will give the endpoints to react to shaping signals (drops or ECN).
         # The default "100ms" is pretty decent that works for many people, assuming their packets don't always need to cross long distances.
         # If you are based in Europe and access data in California I would assume 200-300ms to be a better value.
@@ -136,7 +136,7 @@ CHAIN="FORWARD"  # Write: "FORWARD" | "POSTROUTING"
 
 
 ## DSCP values for the rules
-DSCP_ICMP="EF"    # Change the DSCP value for ICMP (aka ping) to whatever you want.
+DSCP_ICMP="AF11"    # Change the DSCP value for ICMP (aka ping) to whatever you want.
 DSCP_GAMING="CS4"  # You can test changing the DSCP value for games from "CS4" to "EF" or whatever you want.
 DSCP_MULTIMEDIA_CONFERENCING="AF41"
 DSCP_BROADCAST_VIDEO="CS3"
@@ -185,7 +185,7 @@ UDP_DST_BULK_PORTS="6881-6887, 51413"
 
 
 ## Other ports [OPTIONAL]
-DSCP_OTHER_PORTS="CS0"  # Change this DSCP value to whatever you want.
+DSCP_OTHER_PORTS="CS4"  # Change this DSCP value to whatever you want.
 
 TCP_SRC_OTHER_PORTS="53,5353"
 TCP_DST_OTHER_PORTS="53,5353"
@@ -256,7 +256,7 @@ TCP_CONGESTION_CONTROL="bbr"  # Write: "cubic" | "bbr"
                               # "bbr"   The algorithm that was developed by Google and is since used on YouTube, maybe this can improve network response.
 
 
-ECN="2"  # Write values between "0" and "2"
+ECN="0"  # Write values between "0" and "2"
          # "0" Disable ECN. Neither initiate nor accept ECN. (Default in OpenWrt)
          # "1" Enable ECN. When requested by incoming connections and also request ECN on outgoing connection attempts.
          # "2" Enable ECN. When requested by incoming connections, but do not request ECN on outgoing connections.
