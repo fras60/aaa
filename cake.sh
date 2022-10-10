@@ -28,7 +28,7 @@ AUTORATE_INGRESS="no"  # Write: "yes" | "no"
 ## Make sure you set these parameters correctly for your connection type or don't write any value and use a presets or keywords below.
 OVERHEAD="48"           # Write values between "-64" and "256"
 MPU="86"                # Write values between "0" and "256"
-LINK_COMPENSATION="atm"  # Write: "atm" | "ptm" | "noatm"
+LINK_COMPENSATION="noatm"  # Write: "atm" | "ptm" | "noatm"
                       # These values overwrite the presets or keyboards below.
                       # Read: https://openwrt.org/docs/guide-user/network/traffic-shaping/sqm#configuring_the_sqm_bufferbloat_packages
                       # Read: https://openwrt.org/docs/guide-user/network/traffic-shaping/sqm-details#sqmlink_layer_adaptation_tab
@@ -98,7 +98,7 @@ INGRESS_MODE="yes"  # Write: "yes" | "no"
                     # Thus, being more lenient and keeping a minimum number of packets queued will improve throughput in cases
                     # where the number of active flows are so large that they saturate the bottleneck even at their minimum window size.
 
-ACK_FILTER_EGRESS="auto"  # Write: "yes" | "no" | "auto"
+ACK_FILTER_EGRESS="yes"  # Write: "yes" | "no" | "auto"
                           # Write "auto" or don't write anything, so that the script decide to use this parameter, depending on the bandwidth you wrote in "BANDWIDTH_DOWN" and "BANDWIDTH_UP".
                           # If your up/down bandwidth is at least 1x15 asymmetric, you can try the 'ack-filter' option.
                           # It doesn't help on your downlink, nor on symmetric links.
