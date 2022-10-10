@@ -27,14 +27,14 @@ AUTORATE_INGRESS="no"  # Write: "yes" | "no"
 
 ## Make sure you set these parameters correctly for your connection type or don't write any value and use a presets or keywords below.
 OVERHEAD="58"           # Write values between "-64" and "256"
-MPU="75"                # Write values between "0" and "256"
+MPU="124"                # Write values between "0" and "256"
 LINK_COMPENSATION="atm"  # Write: "atm" | "ptm" | "noatm"
                       # These values overwrite the presets or keyboards below.
                       # Read: https://openwrt.org/docs/guide-user/network/traffic-shaping/sqm#configuring_the_sqm_bufferbloat_packages
                       # Read: https://openwrt.org/docs/guide-user/network/traffic-shaping/sqm-details#sqmlink_layer_adaptation_tab
 
 ## Only use these presets or keywords if you don't write a value above in "OVERHEAD", "MPU" and "LINK_COMPENSATION".
-COMMON_LINK_PRESETS="pppoe-llcsnap"  # Write the keyword below:
+COMMON_LINK_PRESETS="conservative"  # Write the keyword below:
                                     # "raw"              Failsafe     (Turns off all overhead compensation)
                                     # "conservative"     Failsafe     (overhead 48 - atm)
                                     # "ethernet"         Ethernet     (overhead 38 - mpu 84 - noatm)
@@ -98,7 +98,7 @@ INGRESS_MODE="yes"  # Write: "yes" | "no"
                     # Thus, being more lenient and keeping a minimum number of packets queued will improve throughput in cases
                     # where the number of active flows are so large that they saturate the bottleneck even at their minimum window size.
 
-ACK_FILTER_EGRESS="yes"  # Write: "yes" | "no" | "auto"
+ACK_FILTER_EGRESS="auto"  # Write: "yes" | "no" | "auto"
                           # Write "auto" or don't write anything, so that the script decide to use this parameter, depending on the bandwidth you wrote in "BANDWIDTH_DOWN" and "BANDWIDTH_UP".
                           # If your up/down bandwidth is at least 1x15 asymmetric, you can try the 'ack-filter' option.
                           # It doesn't help on your downlink, nor on symmetric links.
@@ -106,7 +106,7 @@ ACK_FILTER_EGRESS="yes"  # Write: "yes" | "no" | "auto"
                           # Don't recommend turning it on more symmetrical link bandwidths the effect is negligible at best.
 
 ## Don't write 'ms', just write the number.
-RTT="120"  # Write values between "1" and "1000" or don't write any value to use the default value (100).
+RTT="180"  # Write values between "1" and "1000" or don't write any value to use the default value (100).
         # This parameter defines the time window that your shaper will give the endpoints to react to shaping signals (drops or ECN).
         # The default "100ms" is pretty decent that works for many people, assuming their packets don't always need to cross long distances.
         # If you are based in Europe and access data in California I would assume 200-300ms to be a better value.
@@ -118,7 +118,7 @@ RTT="120"  # Write values between "1" and "1000" or don't write any value to use
         # Example: ping -c 20 openwrt.org (Linux)
         # Example: ping -n 20 openwrt.org (Windows)
 
-EXTRA_PARAMETERS_INGRESS="ether-vlan ether-vlan ether-vlan ether-vlan ether-vlan ether-vlan split-gso"  # Add any custom parameters separated by spaces.
+EXTRA_PARAMETERS_INGRESS="ether-vlan ether-vlan"  # Add any custom parameters separated by spaces.
 EXTRA_PARAMETERS_EGRESS="ether-vlan ether-vlan"   # Add any custom parameters separated by spaces.
                              # These will be appended to the end of the CAKE options and take priority over the options above.
                              # There is no validation done on these options. Use carefully!
@@ -136,7 +136,7 @@ CHAIN="FORWARD"  # Write: "FORWARD" | "POSTROUTING"
 
 
 ## DSCP values for the rules
-DSCP_ICMP="AF33"    # Change the DSCP value for ICMP (aka ping) to whatever you want.
+DSCP_ICMP="CS0"    # Change the DSCP value for ICMP (aka ping) to whatever you want.
 DSCP_GAMING="CS4"  # You can test changing the DSCP value for games from "CS4" to "EF" or whatever you want.
 DSCP_MULTIMEDIA_CONFERENCING="AF41"
 DSCP_BROADCAST_VIDEO="CS3"
@@ -207,7 +207,7 @@ UDP_DST_OTHER_PORTS="53,5353"
 
 
 ## Game consoles (Static IP)
-IPV4_GAME_CONSOLES_STATIC_IP="192.168.1.100-192.168.1.105,192.168.1.101,192.168.5.15"
+IPV4_GAME_CONSOLES_STATIC_IP="192.168.1.100-192.168.1.105,192.168.1.101"
                               # Define a list of IPv4 addresses that will cover all ports (except ports 80, 443, 8080, Live Streaming and BitTorrent).
                               # Write a single IPv4 address or ranges of IPv4 addresses A-B and use a comma to separate them as shown.
                               # The IPv4 address ranges "192.168.1.20-192.168.1.25" will cover IPv4 addresses from '192.168.1.20' to '192.168.1.25'
@@ -233,7 +233,7 @@ IPV6_TORRENTBOX_STATIC_IP="IPv6::10"
 
 
 ## Other static IP addresses [OPTIONAL]
-DSCP_OTHER_STATIC_IP="AF32"  # Change this DSCP value to whatever you want.
+DSCP_OTHER_STATIC_IP="VA"  # Change this DSCP value to whatever you want.
 
 IPV4_OTHER_STATIC_IP="192.168.1.106-192.168.1.240"
 IPV6_OTHER_STATIC_IP=""
@@ -274,7 +274,7 @@ IRQBALANCE="yes"  # Write: "yes" | "no"
                  # The purpose of irqbalance is to distribute hardware interrupts across processors/cores on a multiprocessor/multicore system in order to increase performance.
 
 
-PACKET_STEERING="yes"  # Write: "yes" | "no"
+PACKET_STEERING="no"  # Write: "yes" | "no"
                       ## If you enable or disable it, you need to "reboot" the router for it to take effect.
                       # Enable packet steering across all CPUs. May help or hinder network speed.
                       # It's another (further) approach of trying to equally distribute the load of (network-) packet processing over all available cores.
