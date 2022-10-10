@@ -64,8 +64,8 @@ ETHER_VLAN_KEYWORD="2"  # Write values between "1" and "3" or don't write any va
                        # This keyword "ether-vlan" may be repeated as necessary in 'EXTRA PARAMETERS'.
                        # Read: https://man7.org/linux/man-pages/man8/tc-cake.8.html#OVERHEAD_COMPENSATION_PARAMETERS
 
-PRIORITY_QUEUE_INGRESS="diffserv4"  # Write: "besteffort" | "diffserv3" | "diffserv4" | "diffserv8"
-PRIORITY_QUEUE_EGRESS="diffserv4"   # Write: "besteffort" | "diffserv3" | "diffserv4" | "diffserv8"
+PRIORITY_QUEUE_INGRESS="diffserv8"  # Write: "besteffort" | "diffserv3" | "diffserv4" | "diffserv8"
+PRIORITY_QUEUE_EGRESS="diffserv8"   # Write: "besteffort" | "diffserv3" | "diffserv4" | "diffserv8"
                                     # CAKE can divide traffic into tins based on the Diffserv field.
                                     # "besteffort" only has 'one tin' or priority tier.
                                     # "diffserv3" has '3 tins' or different priority tiers.
@@ -106,7 +106,7 @@ ACK_FILTER_EGRESS="auto"  # Write: "yes" | "no" | "auto"
                           # Don't recommend turning it on more symmetrical link bandwidths the effect is negligible at best.
 
 ## Don't write 'ms', just write the number.
-RTT="180"  # Write values between "1" and "1000" or don't write any value to use the default value (100).
+RTT="170"  # Write values between "1" and "1000" or don't write any value to use the default value (100).
         # This parameter defines the time window that your shaper will give the endpoints to react to shaping signals (drops or ECN).
         # The default "100ms" is pretty decent that works for many people, assuming their packets don't always need to cross long distances.
         # If you are based in Europe and access data in California I would assume 200-300ms to be a better value.
@@ -185,12 +185,12 @@ UDP_DST_BULK_PORTS="6881-6887, 51413"
 
 
 ## Other ports [OPTIONAL]
-DSCP_OTHER_PORTS="AF11"  # Change this DSCP value to whatever you want.
+DSCP_OTHER_PORTS="CS0"  # Change this DSCP value to whatever you want.
 
-TCP_SRC_OTHER_PORTS="53,5353,1-65535"
+TCP_SRC_OTHER_PORTS="53,5353"
 TCP_DST_OTHER_PORTS="53,5353"
 
-UDP_SRC_OTHER_PORTS="53,5353,1-65535"
+UDP_SRC_OTHER_PORTS="53,5353"
 UDP_DST_OTHER_PORTS="53,5353"
                      ## "SRC" = Source port | "DST" = Destination port
                      # Define a list of TCP and UDP ports to mark wherever you want.
@@ -233,7 +233,7 @@ IPV6_TORRENTBOX_STATIC_IP="IPv6::10"
 
 
 ## Other static IP addresses [OPTIONAL]
-DSCP_OTHER_STATIC_IP="EF"  # Change this DSCP value to whatever you want.
+DSCP_OTHER_STATIC_IP="AF23"  # Change this DSCP value to whatever you want.
 
 IPV4_OTHER_STATIC_IP="192.168.1.106-192.168.1.240"
 IPV6_OTHER_STATIC_IP=""
@@ -256,7 +256,7 @@ TCP_CONGESTION_CONTROL="bbr"  # Write: "cubic" | "bbr"
                               # "bbr"   The algorithm that was developed by Google and is since used on YouTube, maybe this can improve network response.
 
 
-ECN="1"  # Write values between "0" and "2"
+ECN="2"  # Write values between "0" and "2"
          # "0" Disable ECN. Neither initiate nor accept ECN. (Default in OpenWrt)
          # "1" Enable ECN. When requested by incoming connections and also request ECN on outgoing connection attempts.
          # "2" Enable ECN. When requested by incoming connections, but do not request ECN on outgoing connections.
