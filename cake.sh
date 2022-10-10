@@ -64,8 +64,8 @@ ETHER_VLAN_KEYWORD="2"  # Write values between "1" and "3" or don't write any va
                        # This keyword "ether-vlan" may be repeated as necessary in 'EXTRA PARAMETERS'.
                        # Read: https://man7.org/linux/man-pages/man8/tc-cake.8.html#OVERHEAD_COMPENSATION_PARAMETERS
 
-PRIORITY_QUEUE_INGRESS="diffserv4"  # Write: "besteffort" | "diffserv3" | "diffserv4" | "diffserv8"
-PRIORITY_QUEUE_EGRESS="diffserv4"   # Write: "besteffort" | "diffserv3" | "diffserv4" | "diffserv8"
+PRIORITY_QUEUE_INGRESS="diffserv8"  # Write: "besteffort" | "diffserv3" | "diffserv4" | "diffserv8"
+PRIORITY_QUEUE_EGRESS="diffserv8"   # Write: "besteffort" | "diffserv3" | "diffserv4" | "diffserv8"
                                     # CAKE can divide traffic into tins based on the Diffserv field.
                                     # "besteffort" only has 'one tin' or priority tier.
                                     # "diffserv3" has '3 tins' or different priority tiers.
@@ -136,7 +136,7 @@ CHAIN="FORWARD"  # Write: "FORWARD" | "POSTROUTING"
 
 
 ## DSCP values for the rules
-DSCP_ICMP="CS0"    # Change the DSCP value for ICMP (aka ping) to whatever you want.
+DSCP_ICMP="EF"    # Change the DSCP value for ICMP (aka ping) to whatever you want.
 DSCP_GAMING="CS4"  # You can test changing the DSCP value for games from "CS4" to "EF" or whatever you want.
 DSCP_MULTIMEDIA_CONFERENCING="AF41"
 DSCP_BROADCAST_VIDEO="CS3"
@@ -256,7 +256,7 @@ TCP_CONGESTION_CONTROL="bbr"  # Write: "cubic" | "bbr"
                               # "bbr"   The algorithm that was developed by Google and is since used on YouTube, maybe this can improve network response.
 
 
-ECN="2"  # Write values between "0" and "2"
+ECN="1"  # Write values between "0" and "2"
          # "0" Disable ECN. Neither initiate nor accept ECN. (Default in OpenWrt)
          # "1" Enable ECN. When requested by incoming connections and also request ECN on outgoing connection attempts.
          # "2" Enable ECN. When requested by incoming connections, but do not request ECN on outgoing connections.
