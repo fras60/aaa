@@ -27,7 +27,7 @@ AUTORATE_INGRESS="no"  # Write: "yes" | "no"
 
 ## Make sure you set these parameters correctly for your connection type or don't write any value and use a presets or keywords below.
 OVERHEAD="58"           # Write values between "-64" and "256"
-MPU="0"                # Write values between "0" and "256"
+MPU="124"                # Write values between "0" and "256"
 LINK_COMPENSATION="atm"  # Write: "atm" | "ptm" | "noatm"
                       # These values overwrite the presets or keyboards below.
                       # Read: https://openwrt.org/docs/guide-user/network/traffic-shaping/sqm#configuring_the_sqm_bufferbloat_packages
@@ -106,7 +106,7 @@ ACK_FILTER_EGRESS="auto"  # Write: "yes" | "no" | "auto"
                           # Don't recommend turning it on more symmetrical link bandwidths the effect is negligible at best.
 
 ## Don't write 'ms', just write the number.
-RTT="150"  # Write values between "1" and "1000" or don't write any value to use the default value (100).
+RTT="180"  # Write values between "1" and "1000" or don't write any value to use the default value (100).
         # This parameter defines the time window that your shaper will give the endpoints to react to shaping signals (drops or ECN).
         # The default "100ms" is pretty decent that works for many people, assuming their packets don't always need to cross long distances.
         # If you are based in Europe and access data in California I would assume 200-300ms to be a better value.
@@ -185,13 +185,13 @@ UDP_DST_BULK_PORTS="6881-6887, 51413"
 
 
 ## Other ports [OPTIONAL]
-DSCP_OTHER_PORTS="CS4"  # Change this DSCP value to whatever you want.
+DSCP_OTHER_PORTS=""  # Change this DSCP value to whatever you want.
 
-TCP_SRC_OTHER_PORTS="53,5353"
-TCP_DST_OTHER_PORTS="53,5353"
+TCP_SRC_OTHER_PORTS=""
+TCP_DST_OTHER_PORTS=""
 
-UDP_SRC_OTHER_PORTS="53,5353"
-UDP_DST_OTHER_PORTS="53,5353"
+UDP_SRC_OTHER_PORTS=""
+UDP_DST_OTHER_PORTS=""
                      ## "SRC" = Source port | "DST" = Destination port
                      # Define a list of TCP and UDP ports to mark wherever you want.
                      # Use a comma to separate the values or ranges A-B as shown.
@@ -256,7 +256,7 @@ TCP_CONGESTION_CONTROL="bbr"  # Write: "cubic" | "bbr"
                               # "bbr"   The algorithm that was developed by Google and is since used on YouTube, maybe this can improve network response.
 
 
-ECN="0"  # Write values between "0" and "2"
+ECN="1"  # Write values between "0" and "2"
          # "0" Disable ECN. Neither initiate nor accept ECN. (Default in OpenWrt)
          # "1" Enable ECN. When requested by incoming connections and also request ECN on outgoing connection attempts.
          # "2" Enable ECN. When requested by incoming connections, but do not request ECN on outgoing connections.
@@ -274,7 +274,7 @@ IRQBALANCE="yes"  # Write: "yes" | "no"
                  # The purpose of irqbalance is to distribute hardware interrupts across processors/cores on a multiprocessor/multicore system in order to increase performance.
 
 
-PACKET_STEERING="yes"  # Write: "yes" | "no"
+PACKET_STEERING="no"  # Write: "yes" | "no"
                       ## If you enable or disable it, you need to "reboot" the router for it to take effect.
                       # Enable packet steering across all CPUs. May help or hinder network speed.
                       # It's another (further) approach of trying to equally distribute the load of (network-) packet processing over all available cores.
