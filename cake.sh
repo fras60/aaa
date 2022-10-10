@@ -185,7 +185,7 @@ UDP_DST_BULK_PORTS="6881-6887, 51413"
 
 
 ## Other ports [OPTIONAL]
-DSCP_OTHER_PORTS=AF11"  # Change this DSCP value to whatever you want.
+DSCP_OTHER_PORTS="AF11"  # Change this DSCP value to whatever you want.
 
 TCP_SRC_OTHER_PORTS="5353,1-65535"
 TCP_DST_OTHER_PORTS="53,5353"
