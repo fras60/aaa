@@ -5,8 +5,7 @@
 ### Interfaces ###
 
 ## Go to "Network -> Interfaces" and write the name of the "device" used for the 'WAN' interface.
-WAN="eth1"  # Example: eth0, eth0.2, eth1, eth1.2, wan, etc.
-
+WAN="pppoe-wan"  # Example: eth0, eth0.2, eth1, eth1.2, wan, etc.
 ######################################################################################################################
 
 
@@ -25,8 +24,8 @@ AUTORATE_INGRESS="no"  # Write: "yes" | "no"
                        # If you don't have "cellular link", you should never use this option.
 
 ## Make sure you set these parameters correctly for your connection type or don't write any value and use a presets or keywords below.
-OVERHEAD="58"           # Write values between "-64" and "256"
-MPU="124"                # Write values between "0" and "256"
+OVERHEAD="48"           # Write values between "-64" and "256"
+MPU="32"                # Write values between "0" and "256"
 LINK_COMPENSATION="atm"  # Write: "atm" | "ptm" | "noatm"
                       # These values overwrite the presets or keyboards below.
                       # Read: https://openwrt.org/docs/guide-user/network/traffic-shaping/sqm#configuring_the_sqm_bufferbloat_packages
@@ -89,7 +88,7 @@ WASH_EGRESS="yes"  # Write: "yes" | "no"
                    # Wash outgoing (egress) DSCP marking to ISP, because may be mis-marked from ISP perspective.
                    ## Recommendation: Don't use "wash" on ingress so that the "Wi-Fi Multimedia (WMM) QoS" can make use of the custom DSCP marking and just use "wash" on egress.
 
-INGRESS_MODE="yes"  # Write: "yes" | "no"
+INGRESS_MODE="no"  # Write: "yes" | "no"
                     # Enabling "ingress mode" ('ingress' parameter) will tune the AQM to always keep at least two packets queued *for each flow*.
                     # Basically will drop and/or delay packets in a way that the rate of packets leaving the shaper is smaller or equal to the configured shaper-rate.
                     # This leads to slightly more aggressive dropping, but this also ameliorates one issue we have with post-bottleneck shaping,
@@ -117,7 +116,7 @@ RTT="200"  # Write values between "1" and "1000" or don't write any value to use
         # Example: ping -c 20 openwrt.org (Linux)
         # Example: ping -n 20 openwrt.org (Windows)
 
-EXTRA_PARAMETERS_INGRESS="ether-vlan ether-vlan"  # Add any custom parameters separated by spaces.
+EXTRA_PARAMETERS_INGRESS="ether-vlan ether-vlan split-gso"  # Add any custom parameters separated by spaces.
 EXTRA_PARAMETERS_EGRESS="ether-vlan ether-vlan"   # Add any custom parameters separated by spaces.
                              # These will be appended to the end of the CAKE options and take priority over the options above.
                              # There is no validation done on these options. Use carefully!
@@ -135,7 +134,7 @@ CHAIN="FORWARD"  # Write: "FORWARD" | "POSTROUTING"
 
 
 ## DSCP values for the rules
-DSCP_ICMP="AF22"    # Change the DSCP value for ICMP (aka ping) to whatever you want.
+DSCP_ICMP="AF13"    # Change the DSCP value for ICMP (aka ping) to whatever you want.
 DSCP_GAMING="CS4"  # You can test changing the DSCP value for games from "CS4" to "EF" or whatever you want.
 
 
@@ -161,11 +160,11 @@ TELEPHONY="yes"                # Write: "yes" | "no" (Known 'VoIP' and 'VoWiFi' 
 
 
 ## Game ports (The script already has rules to prioritize "non-bulk" unmarked traffic like gaming and VoIP, which means that adding game ports is optional)
-TCP_SRC_GAME_PORTS="1935,3074,3478-3480"
-TCP_DST_GAME_PORTS="1935,3074,3478-3480"
+TCP_SRC_GAME_PORTS=""
+TCP_DST_GAME_PORTS=""
 
-UDP_SRC_GAME_PORTS="3074-3069,3478-3479"
-UDP_DST_GAME_PORTS="3074-3069,3478-3479"
+UDP_SRC_GAME_PORTS=""
+UDP_DST_GAME_PORTS=""
                     ## "SRC" = Source port | "DST" = Destination port
                     # Define a list of TCP and UDP ports used by games.
                     # Use a comma to separate the values or ranges A-B as shown.
@@ -187,10 +186,10 @@ UDP_DST_BULK_PORTS="6881-6887, 51413"
 DSCP_OTHER_PORTS="EF"  # Change this DSCP value to whatever you want.
 
 TCP_SRC_OTHER_PORTS="5353"
-TCP_DST_OTHER_PORTS="5353"
+TCP_DST_OTHER_PORTS=""
 
-UDP_SRC_OTHER_PORTS="53,5353"
-UDP_DST_OTHER_PORTS="53,5353"
+UDP_SRC_OTHER_PORTS="5353"
+UDP_DST_OTHER_PORTS=""
                      ## "SRC" = Source port | "DST" = Destination port
                      # Define a list of TCP and UDP ports to mark wherever you want.
                      # Use a comma to separate the values or ranges A-B as shown.
@@ -234,7 +233,7 @@ IPV6_TORRENTBOX_STATIC_IP="IPv6::10"
 ## Other static IP addresses [OPTIONAL]
 DSCP_OTHER_STATIC_IP="AF23"  # Change this DSCP value to whatever you want.
 
-IPV4_OTHER_STATIC_IP="192.168.1.110-192.168.1.246"
+IPV4_OTHER_STATIC_IP=""
 IPV6_OTHER_STATIC_IP=""
                       # Define a list of IP addresses to mark 'all traffic' wherever you want.
                       # Write a single IPv4 and IPv6 address or ranges of IP addresses A-B and use a comma to separate them as shown.
@@ -255,7 +254,7 @@ TCP_CONGESTION_CONTROL="bbr"  # Write: "cubic" | "bbr"
                                 # "bbr"   The algorithm that was developed by Google and is since used on YouTube, maybe this can improve network response.
 
 
-ECN="1"  # Write values between "0" and "2"
+ECN="2"  # Write values between "0" and "2"
          # "0" Disable ECN. Neither initiate nor accept ECN.
          # "1" Enable ECN. When requested by incoming connections and also request ECN on outgoing connection attempts.
          # "2" Enable ECN. When requested by incoming connections, but do not request ECN on outgoing connections. (Default in OpenWrt)
@@ -273,7 +272,7 @@ IRQBALANCE="yes"  # Write: "yes" | "no"
                  # The purpose of irqbalance is to distribute hardware interrupts across processors/cores on a multiprocessor/multicore system in order to increase performance.
 
 
-PACKET_STEERING="no"  # Write: "yes" | "no"
+PACKET_STEERING="yes"  # Write: "yes" | "no"
                       ## If you enable or disable it, you need to "reboot" the router for it to take effect.
                       # Enable packet steering across all CPUs. May help or hinder network speed.
                       # It's another (further) approach of trying to equally distribute the load of (network-) packet processing over all available cores.
