@@ -185,11 +185,11 @@ UDP_DST_BULK_PORTS="6881-6887, 51413"
 ## Other ports [OPTIONAL]
 DSCP_OTHER_PORTS="EF"  # Change this DSCP value to whatever you want.
 
-TCP_SRC_OTHER_PORTS="5353"
-TCP_DST_OTHER_PORTS=""
+TCP_SRC_OTHER_PORTS=""
+TCP_DST_OTHER_PORTS="5353"
 
-UDP_SRC_OTHER_PORTS="5353"
-UDP_DST_OTHER_PORTS=""
+UDP_SRC_OTHER_PORTS=""
+UDP_DST_OTHER_PORTS="5353"
                      ## "SRC" = Source port | "DST" = Destination port
                      # Define a list of TCP and UDP ports to mark wherever you want.
                      # Use a comma to separate the values or ranges A-B as shown.
