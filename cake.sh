@@ -12,6 +12,7 @@ LAN="br-lan"
 
 ## Change this to the name of your "WAN interface".
 WAN="eth1"
+WAN="pppoe-wan"
 
 
 ############################################################
