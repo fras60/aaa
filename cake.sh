@@ -137,7 +137,7 @@ CHAIN="FORWARD"  # Write: "FORWARD" | "POSTROUTING"
 
 ## DSCP values for the rules
 DSCP_ICMP="CS0"    # Change the DSCP value for ICMP (aka ping) to whatever you want.
-DSCP_GAMING="EF"  # You can test changing the DSCP value for games from "CS4" to "EF" or whatever you want.
+DSCP_GAMING="CS4"  # You can test changing the DSCP value for games from "CS4" to "EF" or whatever you want.
 
 
 ## Use known rules [OPTIONAL]
@@ -207,13 +207,13 @@ UDP_DST_OTHER_PORTS=""
 
 
 ## Game consoles (Static IP)
-IPV4_GAME_CONSOLES_STATIC_IP="192.168.1.55-192.168.1.60"
+IPV4_GAME_CONSOLES_STATIC_IP="192.168.1.55"
                               # Define a list of IPv4 addresses that will cover all ports (except ports 80, 443, 8080, Live Streaming and BitTorrent).
                               # Write a single IPv4 address or ranges of IPv4 addresses A-B and use a comma to separate them as shown.
                               # The IPv4 address ranges "192.168.1.20-192.168.1.25" will cover IPv4 addresses from '192.168.1.20' to '192.168.1.25'
 
 
-IPV6_GAME_CONSOLES_STATIC_IP="IPv6::"
+IPV6_GAME_CONSOLES_STATIC_IP=""
                               # Write the IPv6 address or simply write "IPv6::" to automatically add the IPv6 address of your router
                               # and just change the number "15" (or IP address ranges '20' and '25') to the last number of the static IPv4 of your console.
                               # To add an IPv6 address, simply change the number after the double colon "::" for the last number of your static IPv4 address.
@@ -246,7 +246,7 @@ IPV6_OTHER_STATIC_IP=""
 
 ### Change default OpenWrt settings ###
 
-DEFAULT_QDISC="cake"  # Write: "fq_codel" | "cake"
+DEFAULT_QDISC="fq_codel"  # Write: "fq_codel" | "cake"
                           # "fq_codel" Great all around qdisc. (Default in OpenWrt)
                           # "cake"     Great for WAN links, but computationally expensive with little advantages over 'fq_codel' for LAN links.
 
