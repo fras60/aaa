@@ -6,7 +6,6 @@
 
 ## Go to "Network -> Interfaces" and write the name of the "device" used for the 'WAN' interface.
 WAN="eth1"  # Example: eth0, eth0.2, eth1, eth1.2, wan, etc.
-WAN="pppoe-wan"
 
 ######################################################################################################################
 
@@ -26,15 +25,15 @@ AUTORATE_INGRESS="no"  # Write: "yes" | "no"
                        # If you don't have "cellular link", you should never use this option.
 
 ## Make sure you set these parameters correctly for your connection type or don't write any value and use a presets or keywords below.
-OVERHEAD="22"           # Write values between "-64" and "256"
-MPU=""                # Write values between "0" and "256"
-LINK_COMPENSATION="ptm"  # Write: "atm" | "ptm" | "noatm"
+OVERHEAD="58"           # Write values between "-64" and "256"
+MPU="24"                # Write values between "0" and "256"
+LINK_COMPENSATION="noatm"  # Write: "atm" | "ptm" | "noatm"
                       # These values overwrite the presets or keyboards below.
                       # Read: https://openwrt.org/docs/guide-user/network/traffic-shaping/sqm#configuring_the_sqm_bufferbloat_packages
                       # Read: https://openwrt.org/docs/guide-user/network/traffic-shaping/sqm-details#sqmlink_layer_adaptation_tab
 
 ## Only use these presets or keywords if you don't write a value above in "OVERHEAD", "MPU" and "LINK_COMPENSATION".
-COMMON_LINK_PRESETS="bridged-ptm"  # Write the keyword below:
+COMMON_LINK_PRESETS="ethernet"  # Write the keyword below:
                                     # "raw"              Failsafe     (Turns off all overhead compensation)
                                     # "conservative"     Failsafe     (overhead 48 - atm)
                                     # "ethernet"         Ethernet     (overhead 38 - mpu 84 - noatm)
