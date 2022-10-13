@@ -43,7 +43,7 @@ AUTORATE_INGRESS="no"  # Write: "yes" | "no"
 
 ## Make sure you set these parameters correctly for your connection type or don't write any value and use a presets or keywords below.
 OVERHEAD="48"  # Write values between "-64" and "256"
-MPU="86"       # Write values between "0" and "256"
+MPU=""       # Write values between "0" and "256"
 FRAMING="ptm"   # Write: "ptm" | "atm" | "noatm"
              # These values overwrite the presets or keyboards below.
              # Read: https://openwrt.org/docs/guide-user/network/traffic-shaping/sqm#configuring_the_sqm_bufferbloat_packages
@@ -71,7 +71,7 @@ COMMON_LINK_PRESETS="conservative"  # Write the keyword below:
                                     # see: https://github.com/moeller0/ATM_overhead_detector for further information how to do that.
 
 ## This keyword is not for standalone use, but act as a modifier to some previous presets or keywords.
-ETHER_VLAN_KEYWORD=""  # Write values between "1" and "3" or don't write any value.
+ETHER_VLAN_KEYWORD="1"  # Write values between "1" and "3" or don't write any value.
                        # In addition to those previous presets or keywords it is common to have VLAN tags (4 extra bytes) or PPPoE encapsulation (8 extra bytes).
                        # "1" Adds '4 bytes' to the overhead  (ether-vlan)
                        # "2" Adds '8 bytes' to the overhead  (ether-vlan ether-vlan)
@@ -238,7 +238,7 @@ IPV4_GAME_CONSOLES_STATIC_IP="192.168.1.55"
                               # CIDR Address Range "192.168.1.20/30" = '192.168.1.20' to '192.168.1.23'
                               # IPv4 CIDR: https://www.subnet-calculator.com/cidr.php
 
-IPV6_GAME_CONSOLES_STATIC_IP="fd30:9abe:f0ab::15,fd30:9abe:f0ab::20/126"
+IPV6_GAME_CONSOLES_STATIC_IP=""
                               # Go to: "Network -> Interfaces -> Global network options (tab) -> IPv6 ULA-Prefix"
                               # and replace that IP with this "fd30:9abe:f0ab::" or replace the IP of the script with that IP, but don't change the CIDR notation "/48" in the router or add it in the script.
 
@@ -253,7 +253,7 @@ IPV4_TORRENTBOX_STATIC_IP="192.168.1.10"
                            # Define a list of IP addresses and mark 'all traffic' as bulk.
                            # Write a single IP or a CIDR block for a range of IP addresses A/B and use a comma to separate them as shown.
 
-IPV6_TORRENTBOX_STATIC_IP="fd30:9abe:f0ab::10"
+IPV6_TORRENTBOX_STATIC_IP=""
                            # Go to: "Network -> Interfaces -> Global network options (tab) -> IPv6 ULA-Prefix"
                            # and replace that IP with this "fd30:9abe:f0ab::" or replace the IP of the script with that IP, but don't change the CIDR notation "/48" in the router or add it in the script.
 
@@ -306,7 +306,7 @@ UDP_OTHER_STATIC_IP_PORTS_LIST_2=""
 
 ### Firewall ###
 
-FIREWALL_RESTART="no"  # Write: "yes" | "no"
+FIREWALL_RESTART="yes"  # Write: "yes" | "no"
                        # "yes" Restart the firewall to flush the iptables.
                        # "no"  Delete the rules from the chain without restarting the firewall.
                        # This option is for when you change DSCP flags and add ports or IP addresses.
