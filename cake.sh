@@ -34,7 +34,7 @@ LINK_COMPENSATION="atm"  # Write: "atm" | "ptm" | "noatm"
                       # Read: https://openwrt.org/docs/guide-user/network/traffic-shaping/sqm-details#sqmlink_layer_adaptation_tab
 
 ## Only use these presets or keywords if you don't write a value above in "OVERHEAD", "MPU" and "LINK_COMPENSATION".
-COMMON_LINK_PRESETS="conservative"  # Write the keyword below:
+COMMON_LINK_PRESETS="pppoe-vcmux"  # Write the keyword below:
                                     # "raw"              Failsafe     (Turns off all overhead compensation)
                                     # "conservative"     Failsafe     (overhead 48 - atm)
                                     # "ethernet"         Ethernet     (overhead 38 - mpu 84 - noatm)
@@ -98,7 +98,7 @@ INGRESS_MODE="yes"  # Write: "yes" | "no"
                     # Thus, being more lenient and keeping a minimum number of packets queued will improve throughput in cases
                     # where the number of active flows are so large that they saturate the bottleneck even at their minimum window size.
 
-ACK_FILTER_EGRESS="auto"  # Write: "yes" | "no" | "auto"
+ACK_FILTER_EGRESS="no"  # Write: "yes" | "no" | "auto"
                           # Write "auto" or don't write anything, so that the script decide to use this parameter, depending on the bandwidth you wrote in "BANDWIDTH_DOWN" and "BANDWIDTH_UP".
                           # If your up/down bandwidth is at least 1x15 asymmetric, you can try the 'ack-filter' option.
                           # It doesn't help on your downlink, nor on symmetric links.
@@ -221,7 +221,7 @@ IPV6_GAME_CONSOLES_STATIC_IP=""
                               # The IPv6 address ranges "::20-::25" will cover static IPv4 addresses from '192.168.x.20' to '192.168.x.25'
 
 ## TorrentBox (Static IP)
-IPV4_TORRENTBOX_STATIC_IP="192.168.1.10"
+IPV4_TORRENTBOX_STATIC_IP=""
                            # Define a list of IPv4 addresses to mark 'all traffic' as bulk.
                            # Write a single IPv4 address or ranges of IPv4 addresses A-B and use a comma to separate them as shown.
 
@@ -246,17 +246,17 @@ IPV6_OTHER_STATIC_IP=""
 
 ### Change default OpenWrt settings ###
 
-DEFAULT_QDISC="fq_codel"  # Write: "fq_codel" | "cake"
+DEFAULT_QDISC="cake"  # Write: "fq_codel" | "cake"
                           # "fq_codel" Great all around qdisc. (Default in OpenWrt)
                           # "cake"     Great for WAN links, but computationally expensive with little advantages over 'fq_codel' for LAN links.
 
 
-TCP_CONGESTION_CONTROL="bbr"  # Write: "cubic" | "bbr"
+TCP_CONGESTION_CONTROL="cubic"  # Write: "cubic" | "bbr"
                                 # "cubic" The default algorithm for most Linux platforms. (Default in OpenWrt)
                                 # "bbr"   The algorithm that was developed by Google and is since used on YouTube, maybe this can improve network response.
 
 
-ECN="2"  # Write values between "0" and "2"
+ECN="0"  # Write values between "0" and "2"
          # "0" Disable ECN. Neither initiate nor accept ECN.
          # "1" Enable ECN. When requested by incoming connections and also request ECN on outgoing connection attempts.
          # "2" Enable ECN. When requested by incoming connections, but do not request ECN on outgoing connections. (Default in OpenWrt)
