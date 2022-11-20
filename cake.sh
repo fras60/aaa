@@ -5,7 +5,7 @@
 ### Interfaces ###
 
 ## Go to "Network -> Interfaces" and write the name of the "device" used for the 'WAN' interface.
-WAN="eth1"  # Example: eth0, eth0.2, eth1, eth1.2, wan, etc.
+WAN="wan"  # Example: eth0, eth0.2, eth1, eth1.2, wan, etc.
 
 ######################################################################################################################
 
