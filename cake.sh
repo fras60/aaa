@@ -97,7 +97,7 @@ INGRESS_MODE="yes"  # Write: "yes" | "no"
                     # Thus, being more lenient and keeping a minimum number of packets queued will improve throughput in cases
                     # where the number of active flows are so large that they saturate the bottleneck even at their minimum window size.
 
-ACK_FILTER_EGRESS="no"  # Write: "yes" | "no" | "auto"
+ACK_FILTER_EGRESS="yes"  # Write: "yes" | "no" | "auto"
                           # Write "auto" or don't write anything, so that the script decide to use this parameter, depending on the bandwidth you wrote in "BANDWIDTH_DOWN" and "BANDWIDTH_UP".
                           # If your up/down bandwidth is at least 1x15 asymmetric, you can try the 'ack-filter' option.
                           # It doesn't help on your downlink, nor on symmetric links.
@@ -186,11 +186,11 @@ UDP_DST_BULK_PORTS="6881-6887, 51413"
 ## Other ports [OPTIONAL]
 DSCP_OTHER_PORTS="EF"  # Change this DSCP value to whatever you want.
 
-TCP_SRC_OTHER_PORTS="5353"
-TCP_DST_OTHER_PORTS="5353"
+TCP_SRC_OTHER_PORTS="5353, 6001, 6002"
+TCP_DST_OTHER_PORTS="5353, 6001, 6002"
 
-UDP_SRC_OTHER_PORTS="5353"
-UDP_DST_OTHER_PORTS="5353"
+UDP_SRC_OTHER_PORTS="5353, 6001, 6002"
+UDP_DST_OTHER_PORTS="5353, 6001, 6002"
                      ## "SRC" = Source port | "DST" = Destination port
                      # Define a list of TCP and UDP ports to mark wherever you want.
                      # Use a comma to separate the values or ranges A-B as shown.
@@ -255,7 +255,7 @@ TCP_CONGESTION_CONTROL="bbr"  # Write: "cubic" | "bbr"
                                 # "bbr"   The algorithm that was developed by Google and is since used on YouTube, maybe this can improve network response.
 
 
-ECN="2"  # Write values between "0" and "2"
+ECN="1"  # Write values between "0" and "2"
          # "0" Disable ECN. Neither initiate nor accept ECN.
          # "1" Enable ECN. When requested by incoming connections and also request ECN on outgoing connection attempts.
          # "2" Enable ECN. When requested by incoming connections, but do not request ECN on outgoing connections. (Default in OpenWrt)
