@@ -18,7 +18,7 @@ BANDWIDTH_UP="28"     # Change this to about 80-95% of your upload speed (in meg
                       # Not recommendable: Write "0" in "BANDWIDTH_DOWN" or "BANDWIDTH_UP" to use 'CAKE' with no limit on the bandwidth ('unlimited' parameter).
                       # Not recommendable: Don't write anything in "BANDWIDTH_DOWN" or "BANDWIDTH_UP" to disable 'shaping' on ingress or egress.
 
-AUTORATE_INGRESS="no"  # Write: "yes" | "no"
+AUTORATE_INGRESS="yes"  # Write: "yes" | "no"
                        # Enable CAKE automatic rate estimation for ingress.
                        # For it to work you need to write your bandwidth in "BANDWIDTH_DOWN" to specify an initial estimate.
                        # This is most likely to be useful with "cellular links", which tend to change quality randomly.
@@ -26,7 +26,7 @@ AUTORATE_INGRESS="no"  # Write: "yes" | "no"
 
 ## Make sure you set these parameters correctly for your connection type or don't write any value and use a presets or keywords below.
 OVERHEAD="58"           # Write values between "-64" and "256"
-MPU="124"                # Write values between "0" and "256"
+MPU="158"                # Write values between "0" and "256"
 LINK_COMPENSATION="noatm"  # Write: "atm" | "ptm" | "noatm"
                       # These values overwrite the presets or keyboards below.
                       # Read: https://openwrt.org/docs/guide-user/network/traffic-shaping/sqm#configuring_the_sqm_bufferbloat_packages
@@ -97,7 +97,7 @@ INGRESS_MODE="yes"  # Write: "yes" | "no"
                     # Thus, being more lenient and keeping a minimum number of packets queued will improve throughput in cases
                     # where the number of active flows are so large that they saturate the bottleneck even at their minimum window size.
 
-ACK_FILTER_EGRESS="yes"  # Write: "yes" | "no" | "auto"
+ACK_FILTER_EGRESS="auto"  # Write: "yes" | "no" | "auto"
                           # Write "auto" or don't write anything, so that the script decide to use this parameter, depending on the bandwidth you wrote in "BANDWIDTH_DOWN" and "BANDWIDTH_UP".
                           # If your up/down bandwidth is at least 1x15 asymmetric, you can try the 'ack-filter' option.
                           # It doesn't help on your downlink, nor on symmetric links.
@@ -234,7 +234,7 @@ IPV6_TORRENTBOX_STATIC_IP=""
 ## Other static IP addresses [OPTIONAL]
 DSCP_OTHER_STATIC_IP="CS0"  # Change this DSCP value to whatever you want.
 
-IPV4_OTHER_STATIC_IP="192.168.1.110-192.168.1.246"
+IPV4_OTHER_STATIC_IP="192.168.1.100-192.168.1.246"
 IPV6_OTHER_STATIC_IP=""
                       # Define a list of IP addresses to mark 'all traffic' wherever you want.
                       # Write a single IPv4 and IPv6 address or ranges of IP addresses A-B and use a comma to separate them as shown.
@@ -255,7 +255,7 @@ TCP_CONGESTION_CONTROL="bbr"  # Write: "cubic" | "bbr"
                                 # "bbr"   The algorithm that was developed by Google and is since used on YouTube, maybe this can improve network response.
 
 
-ECN="1"  # Write values between "0" and "2"
+ECN="2"  # Write values between "0" and "2"
          # "0" Disable ECN. Neither initiate nor accept ECN.
          # "1" Enable ECN. When requested by incoming connections and also request ECN on outgoing connection attempts.
          # "2" Enable ECN. When requested by incoming connections, but do not request ECN on outgoing connections. (Default in OpenWrt)
