@@ -117,7 +117,7 @@ RTT="450"  # Write values between "1" and "1000" or don't write any value to use
         # Example: ping -c 20 openwrt.org (Linux)
         # Example: ping -n 20 openwrt.org (Windows)
 
-EXTRA_PARAMETERS_INGRESS="pppoe-wan bandwidth 31Mbit ack-filter-aggressive"  # Add any custom parameters separated by spaces.
+EXTRA_PARAMETERS_INGRESS="bandwidth 31Mbit ack-filter-aggressive"  # Add any custom parameters separated by spaces.
 EXTRA_PARAMETERS_EGRESS=""   # Add any custom parameters separated by spaces.
                              # These will be appended to the end of the CAKE options and take priority over the options above.
                              # There is no validation done on these options. Use carefully!
@@ -245,7 +245,7 @@ IPV6_OTHER_STATIC_IP=""
 
 ### Change default OpenWrt settings ###
 
-DEFAULT_QDISC="fq_codel"  # Write: "fq_codel" | "cake"
+DEFAULT_QDISC="cake"  # Write: "fq_codel" | "cake"
                           # "fq_codel" Great all around qdisc. (Default in OpenWrt)
                           # "cake"     Great for WAN links, but computationally expensive with little advantages over 'fq_codel' for LAN links.
 
@@ -255,7 +255,7 @@ TCP_CONGESTION_CONTROL="bbr"  # Write: "cubic" | "bbr"
                                 # "bbr"   The algorithm that was developed by Google and is since used on YouTube, maybe this can improve network response.
 
 
-ECN="0"  # Write values between "0" and "2"
+ECN="1"  # Write values between "0" and "2"
          # "0" Disable ECN. Neither initiate nor accept ECN.
          # "1" Enable ECN. When requested by incoming connections and also request ECN on outgoing connection attempts.
          # "2" Enable ECN. When requested by incoming connections, but do not request ECN on outgoing connections. (Default in OpenWrt)
