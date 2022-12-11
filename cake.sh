@@ -105,7 +105,7 @@ ACK_FILTER_EGRESS="no"  # Write: "yes" | "no" | "auto"
                           # Don't recommend turning it on more symmetrical link bandwidths the effect is negligible at best.
 
 ## Don't write 'ms', just write the number.
-RTT="25"  # Write values between "1" and "1000" or don't write any value to use the default value (100).
+RTT="450"  # Write values between "1" and "1000" or don't write any value to use the default value (100).
         # This parameter defines the time window that your shaper will give the endpoints to react to shaping signals (drops or ECN).
         # The default "100ms" is pretty decent that works for many people, assuming their packets don't always need to cross long distances.
         # If you are based in Europe and access data in California I would assume 200-300ms to be a better value.
@@ -117,7 +117,7 @@ RTT="25"  # Write values between "1" and "1000" or don't write any value to use 
         # Example: ping -c 20 openwrt.org (Linux)
         # Example: ping -n 20 openwrt.org (Windows)
 
-EXTRA_PARAMETERS_INGRESS="bandwidth 31Mbit ack-filter-aggressive"  # Add any custom parameters separated by spaces.
+EXTRA_PARAMETERS_INGRESS="pppoe-wan bandwidth 31Mbit ack-filter-aggressive"  # Add any custom parameters separated by spaces.
 EXTRA_PARAMETERS_EGRESS=""   # Add any custom parameters separated by spaces.
                              # These will be appended to the end of the CAKE options and take priority over the options above.
                              # There is no validation done on these options. Use carefully!
