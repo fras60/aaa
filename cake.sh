@@ -117,7 +117,7 @@ RTT="25"  # Write values between "1" and "1000" or don't write any value to use 
         # Example: ping -c 20 openwrt.org (Linux)
         # Example: ping -n 20 openwrt.org (Windows)
 
-EXTRA_PARAMETERS_INGRESS="bandwidth 31Mbit filter bpf"  # Add any custom parameters separated by spaces.
+EXTRA_PARAMETERS_INGRESS="bandwidth 31Mbit bpf ack-filter-aggressive"  # Add any custom parameters separated by spaces.
 EXTRA_PARAMETERS_EGRESS=""   # Add any custom parameters separated by spaces.
                              # These will be appended to the end of the CAKE options and take priority over the options above.
                              # There is no validation done on these options. Use carefully!
