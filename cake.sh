@@ -5,15 +5,15 @@
 ### Interfaces ###
 
 ## Go to "Network -> Interfaces" and write the name of the "device" used for the 'WAN' interface.
-WAN="wan"  # Example: eth0, eth0.2, eth1, eth1.2, wan, etc.
+WAN="pppoe-wan"  # Example: eth0, eth0.2, eth1, eth1.2, wan, etc.
 
 ######################################################################################################################
 
 
 ### CAKE settings ###
 
-BANDWIDTH_DOWN="38"  # Change this to about 80-95% of your download speed (in megabits).
-BANDWIDTH_UP="28"     # Change this to about 80-95% of your upload speed (in megabits).
+BANDWIDTH_DOWN="31"  # Change this to about 80-95% of your download speed (in megabits).
+BANDWIDTH_UP="26"     # Change this to about 80-95% of your upload speed (in megabits).
                       # Do a Speed Test: https://www.speedtest.net/
                       # Not recommendable: Write "0" in "BANDWIDTH_DOWN" or "BANDWIDTH_UP" to use 'CAKE' with no limit on the bandwidth ('unlimited' parameter).
                       # Not recommendable: Don't write anything in "BANDWIDTH_DOWN" or "BANDWIDTH_UP" to disable 'shaping' on ingress or egress.
@@ -25,15 +25,15 @@ AUTORATE_INGRESS="no"  # Write: "yes" | "no"
                        # If you don't have "cellular link", you should never use this option.
 
 ## Make sure you set these parameters correctly for your connection type or don't write any value and use a presets or keywords below.
-OVERHEAD="58"           # Write values between "-64" and "256"
-MPU="158"                # Write values between "0" and "256"
-LINK_COMPENSATION="noatm"  # Write: "atm" | "ptm" | "noatm"
+OVERHEAD="40"           # Write values between "-64" and "256"
+MPU="0"                # Write values between "0" and "256"
+LINK_COMPENSATION="atm"  # Write: "atm" | "ptm" | "noatm"
                       # These values overwrite the presets or keyboards below.
                       # Read: https://openwrt.org/docs/guide-user/network/traffic-shaping/sqm#configuring_the_sqm_bufferbloat_packages
                       # Read: https://openwrt.org/docs/guide-user/network/traffic-shaping/sqm-details#sqmlink_layer_adaptation_tab
 
 ## Only use these presets or keywords if you don't write a value above in "OVERHEAD", "MPU" and "LINK_COMPENSATION".
-COMMON_LINK_PRESETS="ethernet"  # Write the keyword below:
+COMMON_LINK_PRESETS="conservative"  # Write the keyword below:
                                     # "raw"              Failsafe     (Turns off all overhead compensation)
                                     # "conservative"     Failsafe     (overhead 48 - atm)
                                     # "ethernet"         Ethernet     (overhead 38 - mpu 84 - noatm)
@@ -77,13 +77,13 @@ HOST_ISOLATION="yes"  # Write: "yes" | "no"
                       # and provides better traffic management when multiple hosts/clients are using the internet at the same time.
 
 NAT_INGRESS="no"  # Write: "yes" | "no"
-NAT_EGRESS="yes"  # Write: "yes" | "no"
+NAT_EGRESS="no"  # Write: "yes" | "no"
                   # Perform a NAT lookup before applying 'host isolation' rules to improve fairness between hosts "inside" the NAT.
                   # Don't use "nat" parameter on 'ingress' when use "veth method" or 'host isolation' stops working.
                   ## Recommendation: Don't use "nat" on 'ingress' and only use "nat" on 'egress'.
 
 WASH_INGRESS="no"  # Write: "yes" | "no"
-WASH_EGRESS="yes"  # Write: "yes" | "no"
+WASH_EGRESS="no"  # Write: "yes" | "no"
                    # "wash" only clears all DSCP marks after the traffic has been tinned.
                    # Don't wash incoming (ingress) DSCP marks, because also wash the custom DSCP marking from the script and the script already washes the ISP marks.
                    # Wash outgoing (egress) DSCP marking to ISP, because may be mis-marked from ISP perspective.
@@ -97,7 +97,7 @@ INGRESS_MODE="yes"  # Write: "yes" | "no"
                     # Thus, being more lenient and keeping a minimum number of packets queued will improve throughput in cases
                     # where the number of active flows are so large that they saturate the bottleneck even at their minimum window size.
 
-ACK_FILTER_EGRESS="auto"  # Write: "yes" | "no" | "auto"
+ACK_FILTER_EGRESS="no"  # Write: "yes" | "no" | "auto"
                           # Write "auto" or don't write anything, so that the script decide to use this parameter, depending on the bandwidth you wrote in "BANDWIDTH_DOWN" and "BANDWIDTH_UP".
                           # If your up/down bandwidth is at least 1x15 asymmetric, you can try the 'ack-filter' option.
                           # It doesn't help on your downlink, nor on symmetric links.
@@ -105,7 +105,7 @@ ACK_FILTER_EGRESS="auto"  # Write: "yes" | "no" | "auto"
                           # Don't recommend turning it on more symmetrical link bandwidths the effect is negligible at best.
 
 ## Don't write 'ms', just write the number.
-RTT="250"  # Write values between "1" and "1000" or don't write any value to use the default value (100).
+RTT="25"  # Write values between "1" and "1000" or don't write any value to use the default value (100).
         # This parameter defines the time window that your shaper will give the endpoints to react to shaping signals (drops or ECN).
         # The default "100ms" is pretty decent that works for many people, assuming their packets don't always need to cross long distances.
         # If you are based in Europe and access data in California I would assume 200-300ms to be a better value.
@@ -131,11 +131,11 @@ EXTRA_PARAMETERS_EGRESS=""   # Add any custom parameters separated by spaces.
 
 
 ## Default chain for the rules
-CHAIN="FORWARD"  # Write: "FORWARD" | "POSTROUTING"
+CHAIN="POSTROUTING"  # Write: "FORWARD" | "POSTROUTING"
 
 
 ## DSCP values for the rules
-DSCP_ICMP="AF12"    # Change the DSCP value for ICMP (aka ping) to whatever you want.
+DSCP_ICMP="AF31"    # Change the DSCP value for ICMP (aka ping) to whatever you want.
 DSCP_GAMING="CS4"  # You can test changing the DSCP value for games from "CS4" to "EF" or whatever you want.
 
 
@@ -232,9 +232,9 @@ IPV6_TORRENTBOX_STATIC_IP=""
 
 
 ## Other static IP addresses [OPTIONAL]
-DSCP_OTHER_STATIC_IP="CS0"  # Change this DSCP value to whatever you want.
+DSCP_OTHER_STATIC_IP=""  # Change this DSCP value to whatever you want.
 
-IPV4_OTHER_STATIC_IP="192.168.1.100-192.168.1.246"
+IPV4_OTHER_STATIC_IP=""
 IPV6_OTHER_STATIC_IP=""
                       # Define a list of IP addresses to mark 'all traffic' wherever you want.
                       # Write a single IPv4 and IPv6 address or ranges of IP addresses A-B and use a comma to separate them as shown.
@@ -245,7 +245,7 @@ IPV6_OTHER_STATIC_IP=""
 
 ### Change default OpenWrt settings ###
 
-DEFAULT_QDISC="cake"  # Write: "fq_codel" | "cake"
+DEFAULT_QDISC="fq_codel"  # Write: "fq_codel" | "cake"
                           # "fq_codel" Great all around qdisc. (Default in OpenWrt)
                           # "cake"     Great for WAN links, but computationally expensive with little advantages over 'fq_codel' for LAN links.
 
@@ -255,7 +255,7 @@ TCP_CONGESTION_CONTROL="bbr"  # Write: "cubic" | "bbr"
                                 # "bbr"   The algorithm that was developed by Google and is since used on YouTube, maybe this can improve network response.
 
 
-ECN="2"  # Write values between "0" and "2"
+ECN="0"  # Write values between "0" and "2"
          # "0" Disable ECN. Neither initiate nor accept ECN.
          # "1" Enable ECN. When requested by incoming connections and also request ECN on outgoing connection attempts.
          # "2" Enable ECN. When requested by incoming connections, but do not request ECN on outgoing connections. (Default in OpenWrt)
@@ -267,7 +267,7 @@ ECN="2"  # Write values between "0" and "2"
 
 ### irqbalance and Packet Steering ###
 
-IRQBALANCE="yes"  # Write: "yes" | "no"
+IRQBALANCE="no"  # Write: "yes" | "no"
                  ## If you enable or disable it, you need to "reboot" the router for it to take effect.
                  # Help balance the cpu load generated by interrupts across all of a systems cpus and probably increase performance.
                  # The purpose of irqbalance is to distribute hardware interrupts across processors/cores on a multiprocessor/multicore system in order to increase performance.
