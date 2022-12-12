@@ -97,7 +97,7 @@ INGRESS_MODE="yes"  # Write: "yes" | "no"
                     # Thus, being more lenient and keeping a minimum number of packets queued will improve throughput in cases
                     # where the number of active flows are so large that they saturate the bottleneck even at their minimum window size.
 
-ACK_FILTER_EGRESS="no"  # Write: "yes" | "no" | "auto"
+ACK_FILTER_EGRESS="yes"  # Write: "yes" | "no" | "auto"
                           # Write "auto" or don't write anything, so that the script decide to use this parameter, depending on the bandwidth you wrote in "BANDWIDTH_DOWN" and "BANDWIDTH_UP".
                           # If your up/down bandwidth is at least 1x15 asymmetric, you can try the 'ack-filter' option.
                           # It doesn't help on your downlink, nor on symmetric links.
@@ -117,8 +117,8 @@ RTT="450"  # Write values between "1" and "1000" or don't write any value to use
         # Example: ping -c 20 openwrt.org (Linux)
         # Example: ping -n 20 openwrt.org (Windows)
 
-EXTRA_PARAMETERS_INGRESS="bandwidth 31Mbit ack-filter-aggressive"  # Add any custom parameters separated by spaces.
-EXTRA_PARAMETERS_EGRESS=""   # Add any custom parameters separated by spaces.
+EXTRA_PARAMETERS_INGRESS="bandwidth 34Mbit ack-filter-aggressive"  # Add any custom parameters separated by spaces.
+EXTRA_PARAMETERS_EGRESS="bandwidth 23Mbit"   # Add any custom parameters separated by spaces.
                              # These will be appended to the end of the CAKE options and take priority over the options above.
                              # There is no validation done on these options. Use carefully!
                              # Look: https://man7.org/linux/man-pages/man8/tc-cake.8.html
