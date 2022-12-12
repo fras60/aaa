@@ -117,7 +117,7 @@ RTT="450"  # Write values between "1" and "1000" or don't write any value to use
         # Example: ping -c 20 openwrt.org (Linux)
         # Example: ping -n 20 openwrt.org (Windows)
 
-EXTRA_PARAMETERS_INGRESS="bandwidth 34Mbit ack-filter-aggressive no-split-gso"  # Add any custom parameters separated by spaces.
+EXTRA_PARAMETERS_INGRESS="bandwidth 34Mbit ack-filter-aggressive no-split-gso fw classid 1:1"  # Add any custom parameters separated by spaces.
 EXTRA_PARAMETERS_EGRESS="bandwidth 23Mbit"   # Add any custom parameters separated by spaces.
                              # These will be appended to the end of the CAKE options and take priority over the options above.
                              # There is no validation done on these options. Use carefully!
@@ -184,13 +184,13 @@ UDP_DST_BULK_PORTS="6881-6887, 51413"
 
 
 ## Other ports [OPTIONAL]
-DSCP_OTHER_PORTS="EF"  # Change this DSCP value to whatever you want.
+DSCP_OTHER_PORTS="AF41"  # Change this DSCP value to whatever you want.
 
-TCP_SRC_OTHER_PORTS="5353, 6001, 6002"
-TCP_DST_OTHER_PORTS="5353, 6001, 6002"
+TCP_SRC_OTHER_PORTS="6001, 6002"
+TCP_DST_OTHER_PORTS="6001, 6002"
 
-UDP_SRC_OTHER_PORTS="5353, 6001, 6002"
-UDP_DST_OTHER_PORTS="5353, 6001, 6002"
+UDP_SRC_OTHER_PORTS="6001, 6002"
+UDP_DST_OTHER_PORTS="6001, 6002"
                      ## "SRC" = Source port | "DST" = Destination port
                      # Define a list of TCP and UDP ports to mark wherever you want.
                      # Use a comma to separate the values or ranges A-B as shown.
