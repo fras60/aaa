@@ -6,13 +6,13 @@
 
 ## Go to "Network -> Interfaces" and write the name of the "device" used for the 'WAN' interface.
 WAN="wan"  # Example: eth0, eth0.2, eth1, eth1.2, wan, etc.
-wan="pppoe-wan"
+
 ######################################################################################################################
 
 
 ### CAKE settings ###
 
-BANDWIDTH_DOWN="31"  # Change this to about 80-95% of your download speed (in megabits).
+BANDWIDTH_DOWN="35"  # Change this to about 80-95% of your download speed (in megabits).
 BANDWIDTH_UP="26"     # Change this to about 80-95% of your upload speed (in megabits).
                       # Do a Speed Test: https://www.speedtest.net/
                       # Not recommendable: Write "0" in "BANDWIDTH_DOWN" or "BANDWIDTH_UP" to use 'CAKE' with no limit on the bandwidth ('unlimited' parameter).
@@ -25,8 +25,8 @@ AUTORATE_INGRESS="no"  # Write: "yes" | "no"
                        # If you don't have "cellular link", you should never use this option.
 
 ## Make sure you set these parameters correctly for your connection type or don't write any value and use a presets or keywords below.
-OVERHEAD="40"           # Write values between "-64" and "256"
-MPU="0"                # Write values between "0" and "256"
+OVERHEAD="54"           # Write values between "-64" and "256"
+MPU="75"                # Write values between "0" and "256"
 LINK_COMPENSATION="atm"  # Write: "atm" | "ptm" | "noatm"
                       # These values overwrite the presets or keyboards below.
                       # Read: https://openwrt.org/docs/guide-user/network/traffic-shaping/sqm#configuring_the_sqm_bufferbloat_packages
@@ -77,13 +77,13 @@ HOST_ISOLATION="yes"  # Write: "yes" | "no"
                       # and provides better traffic management when multiple hosts/clients are using the internet at the same time.
 
 NAT_INGRESS="no"  # Write: "yes" | "no"
-NAT_EGRESS="no"  # Write: "yes" | "no"
+NAT_EGRESS="yes"  # Write: "yes" | "no"
                   # Perform a NAT lookup before applying 'host isolation' rules to improve fairness between hosts "inside" the NAT.
                   # Don't use "nat" parameter on 'ingress' when use "veth method" or 'host isolation' stops working.
                   ## Recommendation: Don't use "nat" on 'ingress' and only use "nat" on 'egress'.
 
 WASH_INGRESS="no"  # Write: "yes" | "no"
-WASH_EGRESS="no"  # Write: "yes" | "no"
+WASH_EGRESS="yes"  # Write: "yes" | "no"
                    # "wash" only clears all DSCP marks after the traffic has been tinned.
                    # Don't wash incoming (ingress) DSCP marks, because also wash the custom DSCP marking from the script and the script already washes the ISP marks.
                    # Wash outgoing (egress) DSCP marking to ISP, because may be mis-marked from ISP perspective.
